@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quản trị đánh giá nhận thức</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="assets/logo.png">
+<link rel="icon" href="assets/logo-tuyen-giao-64.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -109,13 +109,17 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
 .dang-nhap{max-width:380px;margin:60px auto}
 .quay{width:16px;height:16px;border:2.5px solid rgba(0,0,0,.15);border-top-color:var(--do);border-radius:50%;animation:q .8s linear infinite;display:inline-block}
 @keyframes q{to{transform:rotate(360deg)}}
+.tien{height:10px;background:#EEE6D5;border-radius:6px;overflow:hidden;margin:12px 0 6px}
+.tien i{display:block;height:100%;width:0;background:var(--do);transition:width .2s}
+.lua-xuat label{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1.5px solid #E2D6BE;border-radius:9px;margin-bottom:8px;cursor:pointer}
+.lua-xuat label:has(input:checked){border-color:var(--do);background:#FFF5F6}
 @media (max-width:640px){.luoi2{grid-template-columns:1fr} .dau h1{font-size:14px} .dau .phai span{display:none}}
 </style>
 </head>
 <body>
 <header class="dau">
   <div class="dau-trong">
-    <div class="logo"><img src="assets/logo.png" alt=""></div>
+    <img src="assets/logo-tuyen-giao-160.png" alt="" style="width:44px;height:44px;flex:none">
     <div><div class="nho">Trang quản trị</div><h1 id="tieuDe">Đánh giá nhận thức sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV</h1></div>
     <div class="phai an" id="khuNguoiDung"><span id="emailND"></span><button id="nutThoat">Đăng xuất</button></div>
   </div>
@@ -157,6 +161,12 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
       <div class="so-lieu" id="oSo"></div>
       <div class="the"><h2>Số lượt nộp bài theo ngày</h2><div class="cot-ngay" id="cotNgay"></div></div>
       <div class="the">
+        <div class="hang" style="margin-bottom:10px"><h2 style="margin:0">🏆 Xếp hạng tham gia</h2>
+          <span style="color:var(--phu);font-size:13px">Theo số người tham gia, rồi tổng số câu trả lời đúng</span><span class="gian"></span>
+          <a class="nut" href="./#bang-xep-hang" target="_blank" rel="noopener">Mở màn hình trình chiếu ↗</a></div>
+        <div class="bang-wrap" style="max-height:340px"><table id="bangXH"></table></div>
+      </div>
+      <div class="the">
         <div class="hang" style="margin-bottom:10px">
           <h2 style="margin:0">Tổng hợp theo đảng bộ</h2>
           <span class="gian"></span>
@@ -189,6 +199,7 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
         <div class="hang">
           <div><b id="chDem"></b><div style="color:var(--phu);font-size:13px">Câu đang <b>bật</b> mới được đưa vào đề. Đề của người đang làm bài không bị ảnh hưởng khi sửa.</div></div>
           <span class="gian"></span>
+          <button class="nut" id="nutTinhCau">📊 Tính tỷ lệ trả lời đúng</button>
           <button class="nut" id="nutChamLai2">Chấm lại toàn bộ</button>
           <button class="nut nut-chinh" id="nutThemCau">+ Thêm câu hỏi</button>
         </div>
@@ -214,14 +225,16 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
           <div class="truong"><label>Đơn vị tổ chức</label><input class="o" name="don_vi_to_chuc" required></div>
           <div class="truong"><label>Thời gian làm bài (phút)</label><input class="o" name="thoi_gian_lam_bai" type="number" min="1" max="300" required></div>
           <div class="truong"><label>Tỷ lệ trả lời đúng để đạt (%)</label><input class="o" name="ty_le_dat" type="number" min="1" max="100" required><small id="cdGoiY"></small></div>
+          <div class="truong"><label>Số lần làm bài tối đa mỗi người</label><input class="o" name="so_lan_toi_da" type="number" min="1" max="10" required><small>1 = không cho làm lại; 2 = được làm lại 1 lần. Tổng hợp lấy kết quả cao nhất.</small></div>
           <div class="truong"><label>Bắt đầu chạy thử (giờ Việt Nam)</label><input class="o" name="thu_nghiem_tu" type="datetime-local"><small>Từ lúc này đến lúc bắt đầu chính thức, bài làm được đánh dấu "thử nghiệm".</small></div>
           <div class="truong"><label>Bắt đầu chính thức</label><input class="o" name="mo_tu" type="datetime-local" required></div>
           <div class="truong"><label>Kết thúc</label><input class="o" name="dong_luc" type="datetime-local" required></div>
           <div class="truong" style="grid-column:1/-1"><label>Thông báo hiển thị trên trang thi (để trống nếu không cần)</label><textarea class="o" name="thong_bao" rows="2"></textarea></div>
+          <div class="truong" style="grid-column:1/-1"><label>Danh mục tài liệu (mỗi dòng một văn bản: <i>Tên ngắn | Tên đầy đủ</i>)</label><textarea class="o" name="tai_lieu" rows="6" style="font-size:13.5px"></textarea>
+            <small>Tên ngắn nên trùng với "Chuyên đề" của câu hỏi, ví dụ: Nghị quyết số 31-NQ/TW | Nghị quyết số 31-NQ/TW, ngày 15/10/2026 của …</small></div>
         </div>
         <div class="hang" style="margin:6px 0 14px;gap:22px">
           <label style="display:flex;gap:6px"><input type="checkbox" name="dao_cau_hoi"> Đảo thứ tự câu hỏi cho mỗi người</label>
-          <label style="display:flex;gap:6px"><input type="checkbox" name="cho_thi_lai"> Cho phép làm lại (lấy kết quả cao nhất)</label>
           <label style="display:flex;gap:6px;color:var(--loi);font-weight:600"><input type="checkbox" name="tam_dung"> Tạm dừng khẩn cấp (khóa trang thi)</label>
         </div>
         <button class="nut nut-chinh">Lưu cài đặt</button>
@@ -251,7 +264,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const so = n => Number(n || 0).toLocaleString("vi-VN");
 const pt = (a, b) => b ? (a / b * 100).toFixed(1).replace(".", ",") + "%" : "–";
 const boDau = s => (s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase();
-let thuNghiem = false, cauHinh = null, thongKe = [], dsDangBo = [], dsCauHoi = [], tkCau = [], dsTrang = 0;
+let thuNghiem = false, cauHinh = null, thongKe = [], dsDangBo = [], dsCauHoi = [], tkCau = null, dsTrang = 0;
 const MOI_TRANG = 50;
 const TEN_TT = {dang_mo:"Đang mở", thu_nghiem:"Đang chạy thử", chua_mo:"Chưa mở", da_ket_thuc:"Đã kết thúc", tam_dung:"Tạm dừng"};
 
@@ -265,6 +278,21 @@ function hop(html, onMo){ const m = document.createElement("div"); m.className =
 function xacNhan(tieuDe, noiDung, nut = "Đồng ý"){ return new Promise(res => {
   const m = hop(`<h3>${esc(tieuDe)}</h3><p style="color:var(--phu)">${noiDung}</p><div class="hang" style="justify-content:flex-end"><button class="nut" data-v="0">Hủy</button><button class="nut nut-chinh" data-v="1">${esc(nut)}</button></div>`);
   m.addEventListener("click", e => { const b = e.target.closest("[data-v]"); if (b){ m.remove(); res(b.dataset.v === "1"); } }); }); }
+
+// Hộp tiến trình cho các việc chạy lâu
+function tienTrinh(tieuDe){
+  const m = hop(`<h3>${esc(tieuDe)}</h3><div class="tien"><i></i></div><div style="color:var(--phu);font-size:13px" data-tt>Đang chuẩn bị…</div>`);
+  m.onmousedown = null; const thanh = m.querySelector(".tien i"), chu = m.querySelector("[data-tt]");
+  return { cap(da, tong, ghiChu){ thanh.style.width = (tong ? da / tong * 100 : 0) + "%"; chu.textContent = ghiChu || `${da}/${tong}`; }, dong(){ m.remove(); } };
+}
+// Chạy một việc cho từng phần tử, tối đa n việc cùng lúc
+async function chayLanLuot(ds, viec, n = 4, moiXong){
+  let i = 0, xong = 0; const kq = new Array(ds.length);
+  await Promise.all(Array.from({ length: Math.min(n, ds.length) }, async () => {
+    while (i < ds.length){ const j = i++; kq[j] = await viec(ds[j], j); xong++; moiXong && moiXong(xong, ds.length); }
+  }));
+  return kq;
+}
 
 /* ---------- đăng nhập ---------- */
 async function kiemTraPhien(){
@@ -288,7 +316,8 @@ $("nutThoat").onclick = async () => { await sb.auth.signOut(); location.reload()
 $("tabs").addEventListener("click", e => { const b = e.target.closest("button[data-tab]"); if (!b) return;
   [...$("tabs").children].forEach(x => x.classList.toggle("chon", x === b));
   ["tqTab","dsTab","chTab","dbTab","cdTab"].forEach(t => $(t).classList.toggle("an", t !== b.dataset.tab));
-  if (b.dataset.tab === "dsTab") taiDanhSach(); });
+  if (b.dataset.tab === "dsTab") taiDanhSach();
+  if (b.dataset.tab === "chTab" && !tkCau && tongCong(thongKe).tham_gia > 0 && tongCong(thongKe).tham_gia <= 30000) tinhThongKeCau(); });
 $("cheDo").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return;
   thuNghiem = b.dataset.v === "1"; [...$("cheDo").children].forEach(x => x.classList.toggle("chon", x === b)); dsTrang = 0; taiTatCa(); });
 $("nutLamMoi").onclick = () => taiTatCa();
@@ -296,15 +325,15 @@ $("nutLamMoi").onclick = () => taiTatCa();
 async function taiTatCa(){
   $("nutLamMoi").disabled = true;
   try {
-    const [tq, tk, ch, db, cd, tkc] = await Promise.all([
+    const [tq, tk, ch, db, cd] = await Promise.all([
       goi("qt_tong_quan", { p_thu_nghiem: thuNghiem }), goi("qt_thong_ke", { p_thu_nghiem: thuNghiem }),
       sb.from("cau_hoi").select("*").order("thu_tu").order("id"), sb.from("dang_bo").select("*").order("thu_tu").order("id"),
-      sb.from("cau_hinh").select("*").eq("id", 1).single(), goi("qt_thong_ke_cau_hoi", { p_thu_nghiem: thuNghiem })]);
+      sb.from("cau_hinh").select("*").eq("id", 1).single()]);
     [ch, db, cd].forEach(r => { if (r.error) throw r.error; });
-    thongKe = tk; dsCauHoi = ch.data; dsDangBo = db.data; cauHinh = cd.data; tkCau = tkc;
+    thongKe = tk; dsCauHoi = ch.data; dsDangBo = db.data; cauHinh = cd.data; tkCau = null;
     $("tieuDe").textContent = cauHinh.ten_dot;
     $("nhanTT").textContent = TEN_TT[tq.trang_thai] || tq.trang_thai; $("nhanTT").className = "nhan-tt tt-" + tq.trang_thai;
-    veTongQuan(tq); veBangTQ(); veCauHoi(); veDangBo(); veCaiDat(tq);
+    veTongQuan(tq); veBangTQ(); veXepHang(); veCauHoi(); veDangBo(); veCaiDat(tq);
     $("dsDB").innerHTML = '<option value="">Tất cả đảng bộ</option>' + dsDangBo.map(d => `<option value="${d.id}">${esc(d.ten)}</option>`).join("");
     if (!$("dsTab").classList.contains("an")) taiDanhSach();
   } catch(e){ toast("Lỗi tải dữ liệu: " + loiMsg(e), true); }
@@ -345,6 +374,18 @@ function veBangTQ(){
   $("bangTQ").innerHTML = html;
 }
 $("tqTim").oninput = veBangTQ; $("tqChiCo").onchange = veBangTQ;
+function xepHang(){
+  const ds = thongKe.filter(r => +r.tham_gia > 0).sort((a, b) => b.tham_gia - a.tham_gia || b.tong_dung - a.tong_dung);
+  let h = 0; ds.forEach((r, i) => { if (i === 0 || +r.tham_gia !== +ds[i-1].tham_gia || +r.tong_dung !== +ds[i-1].tong_dung) h = i + 1; r._hang = h; });
+  return ds;
+}
+function veXepHang(){
+  const ds = xepHang(), md = ["🥇","🥈","🥉"];
+  $("bangXH").innerHTML = `<thead><tr><th>Hạng</th><th>Đảng bộ</th><th class="so">Người tham gia</th><th class="so">Tổng câu đúng</th><th class="so">Bình quân/người</th><th class="so">Số đạt</th><th class="so">Tỷ lệ đạt</th></tr></thead><tbody>` +
+    (ds.length ? ds.map(r => `<tr${r._hang <= 3 ? ' style="font-weight:700"' : ""}><td>${md[r._hang-1] || r._hang}</td><td>${esc(r.ten)}</td><td class="so">${so(r.tham_gia)}</td><td class="so">${so(r.tong_dung)}</td>
+      <td class="so">${(r.tong_dung / r.tham_gia).toFixed(1).replace(".", ",")}</td><td class="so">${so(r.dat)}</td><td class="so">${pt(r.dat, r.tham_gia)}</td></tr>`).join("")
+      : '<tr><td colspan="7" style="color:var(--phu)">Chưa có đảng bộ nào tham gia.</td></tr>') + "</tbody>";
+}
 
 /* ---------- danh sách ---------- */
 const tg = s => s == null ? "" : `${Math.floor(s/60)}′${String(s%60).padStart(2,"0")}″`;
@@ -370,20 +411,26 @@ async function taiDanhSach(){
         <td>${r.lanh_dao ? "Có" : ""}</td><td class="so">${r.so_cau_dung ?? ""}${r.so_cau_dung != null ? "/" + r.tong_so_cau : ""}</td>
         <td>${r.nop_luc ? (r.dat ? '<span class="dat">Đạt</span>' : '<span class="khong">Không đạt</span>') : '<span class="mo">Chưa nộp</span>'}${r.qua_gio ? ' <span class="the-nho" title="Nộp trễ quá 5 phút so với thời gian làm bài">trễ</span>' : ""}</td>
         <td class="so">${tg(r.thoi_gian_giay)}</td><td>${ngayGio(r.nop_luc || r.bat_dau)}</td><td class="so">${r.so_lan}</td>
-        <td><button class="nut nut-nho nut-nguy" data-xoa="${r.id}" title="Xóa lượt thi này">Xóa</button></td></tr>`).join("")
+        <td>${$("dsTatCa").checked ? `<button class="nut nut-nho nut-nguy" data-xoa="${r.id}" title="Xóa lượt thi này">Xóa lượt</button>`
+              : `<button class="nut nut-nho nut-nguy" data-xoanguoi="${r.khoa}" data-ten="${esc(r.ho_ten)}" title="Xóa người này và mọi lượt thi">Xóa</button>`}</td></tr>`).join("")
       : '<tr><td colspan="12" style="color:var(--phu);padding:16px">Không có dữ liệu.</td></tr>') + "</tbody>";
   } catch(e){ $("bangDS").innerHTML = ""; toast(loiMsg(e), true); }
 }
 $("bangDS").addEventListener("click", async e => {
+  const n = e.target.closest("[data-xoanguoi]");
+  if (n){
+    if (!await xacNhan("Xóa người tham gia?", `Xóa <b>${n.dataset.ten}</b> cùng mọi lượt thi của người này (dùng để loại bản ghi nhập sai, trùng…).`, "Xóa")) return;
+    try { await goi("qt_xoa_nguoi", { p_thu_nghiem: thuNghiem, p_khoa: n.dataset.xoanguoi }); toast("Đã xóa."); taiDanhSach(); } catch(err){ toast(loiMsg(err), true); }
+    return;
+  }
   const b = e.target.closest("[data-xoa]"); if (!b) return;
-  if (!await xacNhan("Xóa lượt thi?", "Lượt thi này sẽ bị xóa vĩnh viễn khỏi dữ liệu (dùng để loại bản ghi nhập sai, thử nghiệm…).", "Xóa")) return;
-  const { error } = await sb.from("bai_thi").delete().eq("id", b.dataset.xoa);
-  if (error) return toast(loiMsg(error), true); toast("Đã xóa."); taiDanhSach();
+  if (!await xacNhan("Xóa lượt thi?", "Lượt thi này sẽ bị xóa vĩnh viễn; kết quả cao nhất và số lần của người đó được tính lại.", "Xóa")) return;
+  try { await goi("qt_xoa_bai", { p_id: b.dataset.xoa }); toast("Đã xóa."); taiDanhSach(); } catch(err){ toast(loiMsg(err), true); }
 });
 
 /* ---------- câu hỏi ---------- */
 function veCauHoi(){
-  const bat = dsCauHoi.filter(q => q.hoat_dong).length, tk = Object.fromEntries(tkCau.map(r => [r.cau_hoi_id, r]));
+  const bat = dsCauHoi.filter(q => q.hoat_dong).length, tk = Object.fromEntries((tkCau || []).map(r => [r.cau_hoi_id, r]));
   $("chDem").textContent = `${dsCauHoi.length} câu hỏi · ${bat} câu đang bật (đề thi gồm ${bat} câu)`;
   $("dsCau").innerHTML = dsCauHoi.map((q, i) => { const t = tk[q.id], ty = t && +t.so_tra_loi ? +t.so_dung / +t.so_tra_loi : null;
     return `<div class="cau${q.hoat_dong ? "" : " tat"}">
@@ -397,12 +444,42 @@ function veCauHoi(){
       ${["a","b","c","d"].filter(k => q[k]).map(k => `<div class="pa${q.dap_an === k.toUpperCase() ? " dung" : ""}"><b>${k.toUpperCase()}.</b><span>${esc(q[k])}</span>${q.dap_an === k.toUpperCase() ? " ✓" : ""}</div>`).join("")}
       ${q.ghi_chu ? `<div class="canh">⚠ ${esc(q.ghi_chu)}</div>` : ""}</div>`; }).join("");
 }
+async function tinhThongKeCau(){
+  const dsDB = thongKe.filter(r => +r.tham_gia > 0), tt = tienTrinh("Đang tính tỷ lệ trả lời đúng từng câu");
+  try {
+    const tong = {};
+    await chayLanLuot(dsDB, async r => {
+      const rows = await goi("qt_thong_ke_cau_hoi", { p_thu_nghiem: thuNghiem, p_dang_bo: r.dang_bo_id });
+      rows.forEach(x => { const t = tong[x.cau_hoi_id] ||= { so_a: 0, so_b: 0, so_c: 0, so_d: 0, bo_trong: 0 };
+        ["so_a","so_b","so_c","so_d","bo_trong"].forEach(k => t[k] += +x[k]); });
+    }, 4, (d, n) => tt.cap(d, n, `Đã tính ${d}/${n} đảng bộ`));
+    tkCau = dsCauHoi.map(q => { const t = tong[q.id] || { so_a: 0, so_b: 0, so_c: 0, so_d: 0, bo_trong: 0 };
+      const so_tra_loi = t.so_a + t.so_b + t.so_c + t.so_d + t.bo_trong;
+      return { cau_hoi_id: q.id, thu_tu: q.thu_tu, chuyen_de: q.chuyen_de, noi_dung: q.noi_dung, dap_an: q.dap_an, hoat_dong: q.hoat_dong,
+               ...t, so_tra_loi, so_dung: t["so_" + q.dap_an.toLowerCase()] || 0 }; });
+    veCauHoi();
+  } catch(e){ toast("Lỗi tính thống kê câu hỏi: " + loiMsg(e), true); }
+  finally { tt.dong(); }
+}
+$("nutTinhCau").onclick = tinhThongKeCau;
 async function hoiChamLai(){
   const tq = await goi("qt_tong_quan", { p_thu_nghiem: false }).catch(() => null), tqt = await goi("qt_tong_quan", { p_thu_nghiem: true }).catch(() => null);
   const n = (tq ? +tq.so_luot_nop : 0) + (tqt ? +tqt.so_luot_nop : 0);
   if (n && await xacNhan("Chấm lại bài đã nộp?", `Đã có ${so(n)} lượt nộp bài. Chấm lại toàn bộ theo đáp án mới?`, "Chấm lại")) await chamLai();
 }
-async function chamLai(){ try { const n = await goi("qt_cham_lai"); toast(`Đã chấm lại ${so(n)} bài.`); taiTatCa(); } catch(e){ toast(loiMsg(e), true); } }
+async function chamLai(){
+  const tt = tienTrinh("Đang chấm lại toàn bộ bài đã nộp");
+  try {
+    const [a, b] = await Promise.all([goi("qt_thong_ke", { p_thu_nghiem: false }), goi("qt_thong_ke", { p_thu_nghiem: true })]);
+    const luot = {}; [...a, ...b].forEach(r => luot[r.dang_bo_id] = (luot[r.dang_bo_id] || 0) + +r.so_luot);
+    const viec = []; dsDangBo.forEach(d => { const n = luot[d.id] || 0; if (!n) return;
+      if (n > 2000) for (let p = 0; p < 16; p++) viec.push({ p_dang_bo: d.id, p_phan: p }); else viec.push({ p_dang_bo: d.id, p_phan: null }); });
+    let tong = 0;
+    await chayLanLuot(viec, async v => { tong += await goi("qt_cham_lai", v); }, 3, (d, n) => tt.cap(d, n, `Đã chấm ${d}/${n} phần · ${so(tong)} bài thay đổi`));
+    toast(`Đã chấm lại xong. ${so(tong)} bài có thay đổi kết quả.`); taiTatCa();
+  } catch(e){ toast("Lỗi chấm lại: " + loiMsg(e) + ". Bấm Chấm lại để chạy tiếp.", true); }
+  finally { tt.dong(); }
+}
 $("nutChamLai").onclick = $("nutChamLai2").onclick = async () => { if (await xacNhan("Chấm lại toàn bộ?", "Tính lại số câu đúng và kết quả đạt/không đạt của mọi bài đã nộp theo đáp án và tỷ lệ đạt hiện tại.", "Chấm lại")) chamLai(); };
 $("dsCau").addEventListener("change", async e => { const c = e.target.closest("[data-bat]"); if (!c) return;
   const { error } = await sb.from("cau_hoi").update({ hoat_dong: c.checked, cap_nhat_luc: new Date().toISOString() }).eq("id", +c.dataset.bat);
@@ -496,8 +573,10 @@ function veCaiDat(tq){
   const f = $("formCD");
   ["ten_dot","don_vi_to_chuc","thoi_gian_lam_bai","ty_le_dat","thong_bao"].forEach(k => f.elements[k].value = cauHinh[k] ?? "");
   ["thu_nghiem_tu","mo_tu","dong_luc"].forEach(k => f.elements[k].value = sangO(cauHinh[k]));
-  ["dao_cau_hoi","cho_thi_lai","tam_dung"].forEach(k => f.elements[k].checked = !!cauHinh[k]);
-  goiYDat(); $("demThu").textContent = `Hiện có ${so(tq.so_thu_nghiem)} lượt thi thử nghiệm.`;
+  ["dao_cau_hoi","tam_dung"].forEach(k => f.elements[k].checked = !!cauHinh[k]);
+  f.elements.so_lan_toi_da.value = cauHinh.so_lan_toi_da ?? 2;
+  f.elements.tai_lieu.value = (cauHinh.tai_lieu || []).map(t => t.mo_ta && t.mo_ta !== t.ten ? `${t.ten} | ${t.mo_ta}` : t.ten).join("\n");
+  goiYDat(); cauHinh._so_thu = tq.so_thu_nghiem; $("demThu").textContent = `Hiện có ${so(tq.so_thu_nghiem)} lượt thi thử nghiệm.`;
 }
 function goiYDat(){ const n = dsCauHoi.filter(q => q.hoat_dong).length, t = +$("formCD").elements.ty_le_dat.value || 0;
   $("cdGoiY").textContent = n ? `Với ${n} câu: cần đúng từ ${Math.ceil(t * n / 100)}/${n} câu.` : ""; }
@@ -506,29 +585,55 @@ $("formCD").addEventListener("submit", async e => {
   e.preventDefault(); const f = e.target.elements;
   const row = { ten_dot: f.ten_dot.value.trim(), don_vi_to_chuc: f.don_vi_to_chuc.value.trim(), thoi_gian_lam_bai: +f.thoi_gian_lam_bai.value,
     ty_le_dat: +f.ty_le_dat.value, thong_bao: f.thong_bao.value.trim() || null, thu_nghiem_tu: tuO(f.thu_nghiem_tu.value), mo_tu: tuO(f.mo_tu.value),
-    dong_luc: tuO(f.dong_luc.value), dao_cau_hoi: f.dao_cau_hoi.checked, cho_thi_lai: f.cho_thi_lai.checked, tam_dung: f.tam_dung.checked, cap_nhat_luc: new Date().toISOString() };
+    dong_luc: tuO(f.dong_luc.value), dao_cau_hoi: f.dao_cau_hoi.checked, so_lan_toi_da: +f.so_lan_toi_da.value, tam_dung: f.tam_dung.checked,
+    tai_lieu: f.tai_lieu.value.split("\n").map(d => d.trim()).filter(Boolean).map(d => { const [ten, ...mt] = d.split("|"); return { ten: ten.trim(), mo_ta: (mt.join("|").trim() || ten.trim()) }; }), cap_nhat_luc: new Date().toISOString() };
   if (row.mo_tu && row.dong_luc && new Date(row.mo_tu) >= new Date(row.dong_luc)) return toast("Thời gian kết thúc phải sau thời gian bắt đầu.", true);
   if (row.thu_nghiem_tu && row.mo_tu && new Date(row.thu_nghiem_tu) > new Date(row.mo_tu)) return toast("Thời gian chạy thử phải trước thời gian bắt đầu chính thức.", true);
   const doiTyLe = row.ty_le_dat !== cauHinh.ty_le_dat;
-  const { error } = await sb.from("cau_hinh").update(row).eq("id", 1); if (error) return toast(loiMsg(error), true);
+  delete row._so_thu; const { error } = await sb.from("cau_hinh").update(row).eq("id", 1); if (error) return toast(loiMsg(error), true);
   toast("Đã lưu cài đặt."); await taiTatCa(); if (doiTyLe) hoiChamLai();
 });
 $("nutXoaThu").onclick = async () => {
   if (!await xacNhan("Xóa dữ liệu thử nghiệm?", "Toàn bộ bài làm được đánh dấu <b>thử nghiệm</b> sẽ bị xóa vĩnh viễn. Dữ liệu chính thức không bị ảnh hưởng.", "Xóa dữ liệu thử")) return;
-  try { const n = await goi("qt_xoa_thu_nghiem"); toast(`Đã xóa ${so(n)} lượt thi thử nghiệm.`); taiTatCa(); } catch(e){ toast(loiMsg(e), true); }
+  const tt = tienTrinh("Đang xóa dữ liệu thử nghiệm"), dau = Math.max(1, +(cauHinh._so_thu || 0));
+  try { let con; do { con = await goi("qt_xoa_thu_nghiem"); tt.cap(dau - Math.min(con, dau), dau, `Còn ${so(con)} lượt thi thử`); } while (con > 0);
+    toast("Đã xóa toàn bộ dữ liệu thử nghiệm."); taiTatCa(); } catch(e){ toast(loiMsg(e), true); } finally { tt.dong(); }
 };
 
 /* ---------- xuất Excel ---------- */
-$("nutXuat").onclick = async () => {
-  const nut = $("nutXuat"); nut.disabled = true; nut.innerHTML = '<span class="quay"></span> Đang xuất…';
-  try {
-    const ds = []; const tsCu = thamSoDS(0, 1000); Object.assign(tsCu, { p_tim: null, p_dang_bo: null, p_ket_qua: null, p_lanh_dao: null, p_tat_ca_luot: false });
-    for (let tu = 0; ; tu += 1000){ const p = await goi("qt_danh_sach", { ...tsCu, p_tu: tu }); ds.push(...p); nut.innerHTML = `<span class="quay"></span> ${so(ds.length)} dòng…`; if (p.length < 1000) break; }
-    await xuatExcel(ds);
-  } catch(e){ toast("Lỗi xuất Excel: " + loiMsg(e), true); }
-  finally { nut.disabled = false; nut.textContent = "⬇ Xuất Excel"; }
+$("nutXuat").onclick = () => {
+  const t = tongCong(thongKe), coNguoi = thongKe.filter(r => +r.tham_gia > 0);
+  const m = hop(`<h3>Xuất Excel</h3><form id="fXuat" class="lua-xuat">
+    <p style="color:var(--phu);margin-top:0">File luôn gồm sheet <b>Tổng hợp</b> theo đảng bộ và sheet <b>Theo câu hỏi</b>. Chọn có kèm danh sách từng người không:</p>
+    <label><input type="radio" name="kieu" value="khong" checked><span><b>Không kèm danh sách</b><br><small>Nhanh, dùng cho báo cáo số liệu.</small></span></label>
+    <label><input type="radio" name="kieu" value="db"><span><b>Kèm danh sách một đảng bộ</b><br>
+      <select class="o" name="db" style="margin-top:6px;max-width:100%">${coNguoi.map(r => `<option value="${r.dang_bo_id}">${esc(r.ten)} (${so(r.tham_gia)} người)</option>`).join("")}</select></span></label>
+    <label><input type="radio" name="kieu" value="all"><span><b>Kèm danh sách toàn tỉnh</b> (${so(t.tham_gia)} người)<br><small>${t.tham_gia > 30000 ? "Số lượng lớn: có thể mất 1–3 phút, nên dùng máy tính, không dùng điện thoại." : "Mất vài chục giây."}</small></span></label>
+    <div class="hang" style="justify-content:flex-end;margin-top:12px"><button type="button" class="nut" id="fHuy">Hủy</button><button class="nut nut-vang">⬇ Xuất</button></div></form>`);
+  m.querySelector("#fHuy").onclick = () => m.remove();
+  m.querySelector("#fXuat").addEventListener("submit", async e => {
+    e.preventDefault(); const f = e.target.elements, kieu = f.kieu.value, dbChon = +f.db.value; m.remove();
+    if (!tkCau) await tinhThongKeCau();
+    const tt = tienTrinh("Đang xuất Excel");
+    try {
+      let ds = [];
+      if (kieu !== "khong"){
+        const dsDB = kieu === "db" ? coNguoi.filter(r => r.dang_bo_id === dbChon) : coNguoi;
+        const phan = await chayLanLuot(dsDB, async r => {
+          const kq = []; for (let tu = 0; ; tu += 1000){
+            const p = await goi("qt_danh_sach", { p_thu_nghiem: thuNghiem, p_dang_bo: r.dang_bo_id, p_tat_ca_luot: false, p_tu: tu, p_so: 1000 });
+            kq.push(...p); if (p.length < 1000) break; }
+          return kq;
+        }, 4, (d, n) => tt.cap(d, n + 1, `Đang tải danh sách: ${d}/${n} đảng bộ`));
+        ds = phan.flat();
+      }
+      tt.cap(1, 1, `Đang tạo file Excel (${so(ds.length)} người)…`); await new Promise(z => setTimeout(z, 50));
+      await xuatExcel(ds, kieu);
+    } catch(err){ toast("Lỗi xuất Excel: " + loiMsg(err), true); }
+    finally { tt.dong(); }
+  });
 };
-async function xuatExcel(ds){
+async function xuatExcel(ds, kieu){
   const wb = new ExcelJS.Workbook(); wb.creator = cauHinh.don_vi_to_chuc;
   const F = { name: "Times New Roman", size: 12 }, vien = { top:{style:"thin"}, left:{style:"thin"}, bottom:{style:"thin"}, right:{style:"thin"} };
   const bay = new Date(), p2 = n => String(n).padStart(2, "0");
@@ -562,21 +667,35 @@ async function xuatExcel(ds){
   ws.columns.forEach((c, i) => c.width = [6, 36, 10, 12, 12, 10, 12, 12, 10, 12, 12, 10][i]);
 
   // Sheet 2: danh sách
+  if (kieu !== "khong"){
   const w2 = wb.addWorksheet("Danh sách", { pageSetup: { orientation: "landscape", paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 }, views: [{ state: "frozen", ySplit: 6 }] });
   tieuDe(w2, 11, "DANH SÁCH CÁN BỘ, ĐẢNG VIÊN THAM GIA ĐÁNH GIÁ NHẬN THỨC");
   w2.getRow(6).values = ["STT", "Họ và tên", "Chức vụ", "Đơn vị công tác", "Đảng bộ", "Giữ chức vụ LĐ, QL", "Số câu đúng", "Kết quả", "Thời gian làm bài (phút)", "Nộp bài lúc", "Số lần làm bài"]; dauBang(w2, 6);
   ds.forEach((x, i) => { w2.getRow(7 + i).values = [i+1, x.ho_ten, x.chuc_vu, x.don_vi, x.dang_bo, x.lanh_dao ? "Có" : "Không", `${x.so_cau_dung}/${x.tong_so_cau}`,
     x.dat ? "Đạt" : "Không đạt", x.thoi_gian_giay != null ? Math.round(x.thoi_gian_giay / 6) / 10 : null, ngayGio(x.nop_luc), +x.so_lan]; });
-  kieuBang(w2, 6, 6 + ds.length, 11);
-  for (let i = 7; i < 7 + ds.length; i++){ [1,6,7,8,11].forEach(c => w2.getCell(i, c).alignment = { horizontal: "center" }); }
+  if (ds.length <= 30000){ kieuBang(w2, 6, 6 + ds.length, 11);
+    for (let i = 7; i < 7 + ds.length; i++){ [1,6,7,8,11].forEach(c => w2.getCell(i, c).alignment = { horizontal: "center" }); } }
+  else { kieuBang(w2, 6, 6, 11); w2.columns.forEach(c => c.font = F); }
   w2.columns.forEach((c, i) => c.width = [6, 26, 24, 30, 26, 11, 10, 11, 11, 18, 9][i]);
   if (ds.length) w2.autoFilter = { from: { row: 6, column: 1 }, to: { row: 6 + ds.length, column: 11 } };
+  }
+
+  // Sheet: xếp hạng
+  const wx = wb.addWorksheet("Xếp hạng", { pageSetup: { orientation: "portrait", paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 }, views: [{ state: "frozen", ySplit: 6 }] });
+  tieuDe(wx, 8, "BẢNG XẾP HẠNG CÁC ĐẢNG BỘ THAM GIA ĐÁNH GIÁ NHẬN THỨC");
+  wx.getRow(6).values = ["Hạng", "Đảng bộ", "Số người tham gia", "Tổng số câu trả lời đúng", "Bình quân câu đúng/người", "Số đạt", "Tỷ lệ đạt (%)", "Ghi chú"]; dauBang(wx, 6);
+  const xh = xepHang();
+  xh.forEach((x, i) => { wx.getRow(7 + i).values = [x._hang, x.ten, +x.tham_gia, +x.tong_dung, Math.round(x.tong_dung / x.tham_gia * 10) / 10, +x.dat, Math.round(x.dat / x.tham_gia * 1000) / 10, x._hang <= 3 ? "Dẫn đầu" : ""];
+    if (x._hang <= 3) wx.getRow(7 + i).eachCell(o => o.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFFFF6E0" } }); });
+  kieuBang(wx, 6, 6 + xh.length, 8);
+  for (let i = 7; i < 7 + xh.length; i++){ wx.getCell(i, 1).alignment = { horizontal: "center" }; if (+wx.getCell(i, 1).value <= 3) wx.getRow(i).eachCell(o => o.font = { ...F, bold: true }); }
+  wx.columns.forEach((c, i) => c.width = [7, 36, 12, 14, 14, 10, 10, 10][i]);
 
   // Sheet 3: theo câu hỏi
   const w3 = wb.addWorksheet("Theo câu hỏi", { pageSetup: { orientation: "landscape", paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 } });
   tieuDe(w3, 11, "TỶ LỆ TRẢ LỜI ĐÚNG TỪNG CÂU HỎI");
   w3.getRow(6).values = ["STT", "Văn bản", "Nội dung câu hỏi", "Đáp án", "Số người trả lời", "Số trả lời đúng", "Tỷ lệ đúng (%)", "Chọn A", "Chọn B", "Chọn C", "Bỏ trống"]; dauBang(w3, 6);
-  const dsc = tkCau.filter(x => +x.so_tra_loi > 0 || x.hoat_dong);
+  const dsc = (tkCau || []).filter(x => +x.so_tra_loi > 0 || x.hoat_dong);
   dsc.forEach((x, i) => { w3.getRow(7 + i).values = [i+1, x.chuyen_de, x.noi_dung, x.dap_an, +x.so_tra_loi, +x.so_dung, +x.so_tra_loi ? Math.round(+x.so_dung / +x.so_tra_loi * 1000) / 10 : null, +x.so_a, +x.so_b, +x.so_c, +x.bo_trong];
     w3.getCell(7 + i, 3).alignment = { wrapText: true, vertical: "top" }; });
   kieuBang(w3, 6, 6 + dsc.length, 11);
@@ -585,7 +704,7 @@ async function xuatExcel(ds){
   const buf = await wb.xlsx.writeBuffer(), a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
   a.download = `KetQua_DanhGiaNhanThuc_${thuNghiem ? "ThuNghiem_" : ""}${bay.getFullYear()}${p2(bay.getMonth()+1)}${p2(bay.getDate())}_${p2(bay.getHours())}${p2(bay.getMinutes())}.xlsx`;
-  document.body.appendChild(a); a.click(); a.remove(); toast(`Đã xuất ${so(ds.length)} người.`);
+  document.body.appendChild(a); a.click(); a.remove(); toast(kieu === "khong" ? "Đã xuất file tổng hợp." : `Đã xuất file kèm danh sách ${so(ds.length)} người.`);
 }
 
 kiemTraPhien();

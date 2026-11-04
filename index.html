@@ -4,150 +4,263 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Đánh giá nhận thức Nghị quyết</title>
-<meta name="description" content="Đánh giá nhận thức sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV — Tỉnh ủy Tuyên Quang">
-<meta name="theme-color" content="#C8102E">
-<link rel="icon" href="assets/logo.png">
+<meta name="description" content="Đánh giá nhận thức sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV — Ban Tuyên giáo Tỉnh ủy Tuyên Quang">
+<meta name="theme-color" content="#B50E28">
+<link rel="icon" href="assets/logo-tuyen-giao-64.png">
+<link rel="apple-touch-icon" href="assets/logo-tuyen-giao-160.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="config.js"></script>
 <style>
 :root{
-  --do:#C8102E; --do-dam:#9E0B22; --vang:#F5A623; --vang-nhat:#FFF6E0;
-  --nen:#FFFBF2; --the:#FFFFFF; --chu:#0D1B2A; --chu-phu:#55606E; --vien:#EADFC8;
-  --xanh:#1F7A3A; --loi:#B42318;
-  --bo:14px;
+  --do:#C8102E; --do-dam:#9E0B22; --do-sau:#7A0A1C; --vang:#F5A623; --vang-dam:#D98A0B; --vang-nhat:#FFF4DC;
+  --nen:#FFF8F2; --the:#FFFFFF; --chu:#0D1B2A; --phu:#5B6472; --vien:#EEDFD2; --xanh:#1E7B3C; --loi:#B42318;
+  --bong:0 18px 50px -18px rgba(158,11,34,.28), 0 2px 6px rgba(13,27,42,.05);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--nen);color:var(--chu);
-  font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+body{font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--nen);color:var(--chu);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
 button,input,select{font:inherit;color:inherit}
 .an{display:none!important}
+a{color:var(--do)}
 
-/* ===== Header ===== */
-.dau{background:linear-gradient(160deg,var(--do) 0%,var(--do-dam) 100%);color:#fff;position:relative;overflow:hidden}
-.dau::after{content:"";position:absolute;inset:auto -10% -60px auto;width:260px;height:260px;border-radius:50%;
-  background:radial-gradient(circle,rgba(245,166,35,.22),transparent 65%)}
-.dau-trong{max-width:760px;margin:0 auto;padding:18px 16px 22px;display:flex;gap:14px;align-items:center;position:relative;z-index:1}
-.logo{width:58px;height:58px;flex:none;border-radius:50%;background:rgba(0,0,0,.14);display:grid;place-items:center;
-  box-shadow:inset 0 0 0 2px rgba(245,166,35,.55)}
-.logo img{width:38px;height:auto;display:block}
-.dau .nho{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--vang);font-weight:700}
-.dau h1{margin:2px 0 0;font-size:18px;line-height:1.35;font-weight:700;text-wrap:balance}
-.vach{height:4px;background:var(--vang)}
+/* ================= THANH ĐẦU ================= */
+.dau{background:linear-gradient(100deg,var(--do-sau),var(--do) 55%,#D4182F);color:#fff;position:relative;z-index:5;box-shadow:0 2px 12px rgba(122,10,28,.25)}
+.dau-trong{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:12px}
+.dau .logo{width:46px;height:46px;flex:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.dau .ten-dv{font-weight:800;letter-spacing:.04em;color:var(--vang);font-size:15px;line-height:1.25;text-transform:uppercase}
+.dau .ten-dv small{display:block;color:#FFE2E6;font-weight:500;letter-spacing:.02em;text-transform:none;font-size:12.5px}
+.dau .phai{margin-left:auto;display:flex;gap:8px}
+.nut-dau{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.nut-dau:hover{background:rgba(255,255,255,.22)}
+.nut-dau.trang{background:#fff;color:var(--do);border-color:#fff}
+.nut-dau svg{width:16px;height:16px}
 
-main{max-width:760px;margin:0 auto;padding:18px 16px 40px}
-.the{background:var(--the);border:1px solid var(--vien);border-radius:var(--bo);padding:18px;box-shadow:0 1px 2px rgba(13,27,42,.04)}
-.the + .the{margin-top:14px}
-h2{font-size:18px;margin:0 0 12px;line-height:1.35}
+/* ================= TRANG CHỦ ================= */
+.trang-chu{position:relative;overflow:hidden;min-height:calc(100vh - 66px)}
+.trang-chu::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(900px 500px at 12% 8%,rgba(200,16,46,.08),transparent 60%),radial-gradient(700px 500px at 92% 30%,rgba(245,166,35,.12),transparent 60%)}
+.hoa-van{position:absolute;pointer-events:none;opacity:.07;width:620px;height:620px;left:-170px;top:-170px}
+.nen-tq{position:fixed;left:0;right:0;bottom:0;height:clamp(140px,24vw,320px);pointer-events:none;opacity:.16;z-index:0;
+  background:url("assets/nen-tuyen-quang.svg") center bottom/cover no-repeat}
+body.dang-thi .nen-tq{opacity:.07}
+.song{position:absolute;left:0;right:0;bottom:0;height:90px;pointer-events:none}
+.luoi-chinh{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:34px 20px 140px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:44px;align-items:start}
 
-/* ===== Quy định ===== */
-.quydinh{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 4px}
-.qd{background:var(--vang-nhat);border-radius:10px;padding:10px 8px;text-align:center}
-.qd b{display:block;font-size:22px;color:var(--do);line-height:1.2}
-.qd span{font-size:12.5px;color:var(--chu-phu)}
-.ghichu{font-size:14px;color:var(--chu-phu);margin:10px 0 0}
-.bang-tb{background:#FFF1F1;border:1px solid #F3C7CC;color:var(--do-dam);border-radius:10px;padding:10px 12px;font-size:14.5px;margin-bottom:14px}
-.bang-tb.thu{background:#FFF7E6;border-color:#F5D9A0;color:#7A4D00}
+.nhan-the{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--do);border:1px solid #F6D3D9;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(200,16,46,.08)}
+.nhan-the i{width:8px;height:8px;border-radius:50%;background:var(--do);box-shadow:0 0 0 4px rgba(200,16,46,.15)}
+.tieu-de{font-size:clamp(28px,3.5vw,46px);line-height:1.12;font-weight:900;letter-spacing:-.02em;margin:16px 0 14px;text-wrap:balance}
+.tieu-de span{display:block;color:var(--do)}
+.mo-ta{color:#3D4654;font-size:16.5px;max-width:560px;margin:0 0 18px}
+.gach{width:64px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--do),var(--vang));margin:0 0 22px}
 
-/* ===== Form ===== */
+.chip-tt{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.chip{background:#fff;border:1px solid var(--vien);border-radius:14px;padding:10px 14px;min-width:96px;box-shadow:0 1px 2px rgba(13,27,42,.04)}
+.chip b{display:block;font-size:22px;line-height:1.1;color:var(--do);font-weight:800}
+.chip span{font-size:12.5px;color:var(--phu)}
+.trang-thai{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--vien);border-left:4px solid var(--vang);border-radius:12px;padding:11px 14px;margin-bottom:22px;font-size:14.5px}
+.trang-thai .cham{width:10px;height:10px;border-radius:50%;background:var(--vang);flex:none}
+.trang-thai.mo{border-left-color:var(--xanh)} .trang-thai.mo .cham{background:var(--xanh);box-shadow:0 0 0 4px rgba(30,123,60,.15);animation:nhip 1.6s infinite}
+.trang-thai.dong{border-left-color:#9AA3AE} .trang-thai.dong .cham{background:#9AA3AE}
+@keyframes nhip{50%{box-shadow:0 0 0 8px rgba(30,123,60,0)}}
+
+.khoi{background:rgba(255,255,255,.66);backdrop-filter:blur(1.5px);border:1px solid var(--vien);border-radius:18px;padding:18px 18px 16px;margin-bottom:18px;box-shadow:0 1px 3px rgba(13,27,42,.04)}
+.khoi-dau{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.khoi-dau h2{font-size:17px;margin:0;font-weight:800}
+.khoi-dau .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#FDECEF;color:var(--do);flex:none}
+.khoi-dau .ic svg{width:18px;height:18px}
+.khoi-dau .gian{margin-left:auto}
+.tl{list-style:none;margin:0;padding:0;counter-reset:tl}
+.tl li{counter-increment:tl;display:flex;gap:12px;padding:10px 0;border-top:1px dashed #EEDFD2;font-size:14.5px;line-height:1.5}
+.tl li:first-child{border-top:0;padding-top:2px}
+.tl li::before{content:counter(tl);flex:none;width:26px;height:26px;border-radius:8px;background:var(--vang-nhat);color:#8A5300;font-weight:800;display:grid;place-items:center;font-size:13px}
+.tl b{color:var(--do-dam)}
+.nut-mo-rong{border:0;background:none;color:var(--do);font-weight:700;cursor:pointer;padding:6px 0 0;font-size:14px}
+
+/* Bục vinh danh (top 3) */
+.buc{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:10px;align-items:end;margin:6px 0 10px}
+.buc .o{text-align:center;padding:12px 8px 0;border-radius:14px 14px 0 0;position:relative;min-width:0}
+.buc .huy{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-weight:900;font-size:19px;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.buc .ten{font-weight:700;font-size:13.5px;line-height:1.3;min-height:35px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.buc .so{font-size:12.5px;color:var(--phu);margin:4px 0 8px}
+.buc .be{border-radius:12px 12px 0 0;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
+.buc .h1 .huy{background:linear-gradient(145deg,#F7C548,#D98A0B)} .buc .h1 .be{height:84px;background:linear-gradient(180deg,var(--do),var(--do-dam))}
+.buc .h2 .huy{background:linear-gradient(145deg,#C9CED6,#8E97A4)} .buc .h2 .be{height:60px;background:linear-gradient(180deg,#D8404F,#B0172E)}
+.buc .h3 .huy{background:linear-gradient(145deg,#E2A574,#B06A33)} .buc .h3 .be{height:44px;background:linear-gradient(180deg,#E06A74,#C23446)}
+.buc .rong .huy{background:#E7E1DA;color:#A79A8C}
+.bxh-tom{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--phu);border-top:1px dashed #EEDFD2;padding-top:10px}
+
+/* ======= Thẻ biểu mẫu ======= */
+.the-form{background:#fff;border-radius:24px;padding:28px 28px 26px;box-shadow:var(--bong);border:1px solid #F3E4DA;position:sticky;top:20px}
+.the-form .ic-dau{width:52px;height:52px;border-radius:16px;margin:0 auto 10px;display:grid;place-items:center;background:#FDECEF;color:var(--do)}
+.the-form .nho{text-align:center;color:var(--do);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.the-form h2{text-align:center;margin:4px 0 4px;font-size:23px;font-weight:800}
+.the-form .phu{text-align:center;color:var(--phu);font-size:14px;margin:0 0 18px}
 .truong{margin-bottom:14px}
-.truong label.nhan{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
-.truong label.nhan i{color:var(--do);font-style:normal}
-.o{width:100%;border:1.5px solid #D9CDB4;background:#fff;border-radius:10px;padding:12px 13px;font-size:16px;outline:none;transition:border-color .15s}
-.o:focus{border-color:var(--do);box-shadow:0 0 0 3px rgba(200,16,46,.12)}
-.o.sai{border-color:var(--loi)}
-.loi-nho{color:var(--loi);font-size:13.5px;margin-top:5px}
-
+.nhan{display:block;font-weight:600;font-size:14.5px;margin-bottom:6px}
+.nhan i{color:var(--do);font-style:normal}
+.o-wrap{position:relative}
+.o-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#9A8F86;pointer-events:none}
+.o{width:100%;border:1.5px solid #E7D9CC;background:#FCFAF8;border-radius:12px;padding:12px 13px 12px 40px;font-size:16px;outline:none;transition:border-color .15s,box-shadow .15s,background .15s}
+.o:focus{border-color:var(--do);background:#fff;box-shadow:0 0 0 4px rgba(200,16,46,.10)}
+.o.sai{border-color:var(--loi);background:#FFF6F6}
 .chon-db{position:relative}
-.ds-db{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1.5px solid #D9CDB4;border-radius:10px;
-  max-height:300px;overflow:auto;z-index:20;box-shadow:0 10px 30px rgba(13,27,42,.15)}
-.ds-db .nhom{position:sticky;top:0;background:var(--vang-nhat);font-size:12.5px;font-weight:700;color:var(--do-dam);padding:6px 12px;text-transform:uppercase;letter-spacing:.04em}
-.ds-db button{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 12px;border-bottom:1px solid #F3EDE0;cursor:pointer}
-.ds-db button:hover,.ds-db button:focus{background:#FFF1F1;outline:none}
-.ds-db .rong{padding:12px;color:var(--chu-phu);font-size:14px}
-
+.ds-db{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1.5px solid #E7D9CC;border-radius:12px;max-height:300px;overflow:auto;z-index:20;box-shadow:0 14px 34px rgba(13,27,42,.16)}
+.ds-db .nhom{position:sticky;top:0;background:var(--vang-nhat);font-size:12px;font-weight:800;color:var(--do-dam);padding:6px 12px;text-transform:uppercase;letter-spacing:.04em}
+.ds-db button{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 14px;border-bottom:1px solid #F5EEE6;cursor:pointer}
+.ds-db button:hover,.ds-db button:focus{background:#FFF1F3;outline:none}
+.ds-db .rong{padding:12px;color:var(--phu);font-size:14px}
 .lua-chon{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.lua-chon label{border:1.5px solid #D9CDB4;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;background:#fff;font-size:15px;line-height:1.4}
-.lua-chon input{accent-color:var(--do);width:18px;height:18px;margin:2px 0 0;flex:none}
-.lua-chon label:has(input:checked){border-color:var(--do);background:#FFF5F6}
-
-.nut{border:0;border-radius:12px;padding:14px 18px;font-weight:700;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .05s,filter .15s}
+.lua-chon label{border:1.5px solid #E7D9CC;border-radius:12px;padding:11px 12px;display:flex;gap:9px;align-items:flex-start;cursor:pointer;background:#FCFAF8;font-size:14.5px;line-height:1.35}
+.lua-chon input{accent-color:var(--do);width:18px;height:18px;margin:1px 0 0;flex:none}
+.lua-chon label:has(input:checked){border-color:var(--do);background:#FFF4F5}
+.loi-nho{color:var(--loi);font-size:13.5px;margin:-2px 0 12px}
+.nut{border:0;border-radius:14px;padding:14px 18px;font-weight:700;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .05s,filter .15s,background .15s}
 .nut:active{transform:translateY(1px)}
 .nut:disabled{opacity:.55;cursor:not-allowed}
-.nut-chinh{background:var(--do);color:#fff;box-shadow:0 2px 0 var(--do-dam)}
+.nut-chinh{background:linear-gradient(180deg,#D51A36,var(--do));color:#fff;box-shadow:0 10px 22px -10px rgba(200,16,46,.7),inset 0 -2px 0 rgba(0,0,0,.12)}
 .nut-chinh:hover:not(:disabled){filter:brightness(1.06)}
-.nut-phu{background:#fff;color:var(--chu);border:1.5px solid #D9CDB4}
-.nut-vang{background:var(--vang);color:var(--chu);box-shadow:0 2px 0 #C9831A}
+.nut-phu{background:#fff;color:var(--chu);border:1.5px solid #E2D3C5}
+.nut-vang{background:linear-gradient(180deg,#FFBA3D,var(--vang));color:var(--chu);box-shadow:inset 0 -2px 0 rgba(0,0,0,.1)}
 .rong-het{width:100%}
+.bang-tb{border-radius:12px;padding:10px 13px;font-size:14px;margin-bottom:14px;border:1px solid}
+.bang-tb.thu{background:#FFF7E6;border-color:#F5D9A0;color:#7A4D00}
+.bang-tb.do{background:#FFF1F1;border-color:#F3C7CC;color:var(--do-dam)}
+.dong-lai{text-align:center;padding:12px 4px}
+.dong-lai .bieu{font-size:40px;line-height:1}
+.dong-lai h3{margin:10px 0 6px;font-size:19px}
+.dong-lai p{color:var(--phu);margin:0}
 
-/* ===== Làm bài ===== */
-.thanh{position:sticky;top:0;z-index:30;background:var(--chu);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-.thanh-trong{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
-.dong-ho{font-variant-numeric:tabular-nums;font-weight:800;font-size:22px;letter-spacing:.02em;min-width:78px}
-.dong-ho.gap{color:var(--vang);animation:nhay 1s steps(2) infinite}
-@keyframes nhay{50%{opacity:.55}}
-.tien-do{flex:1;min-width:0}
-.tien-do small{display:block;font-size:12.5px;opacity:.8}
-.vach-td{height:6px;background:rgba(255,255,255,.18);border-radius:6px;overflow:hidden;margin-top:4px}
-.vach-td i{display:block;height:100%;background:var(--vang);width:0;transition:width .25s}
-.thanh .nut{padding:10px 14px;font-size:15px}
+/* ================= LÀM BÀI ================= */
+.lam-bai{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:18px 20px 40px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:22px;align-items:start}
+.thanh-bai{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--vien);box-shadow:0 2px 12px rgba(13,27,42,.06)}
+.thanh-bai-trong{max-width:1240px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.thanh-bai .nhan-bai{display:flex;flex-direction:column;min-width:0}
+.thanh-bai .nhan-bai small{font-weight:800;color:var(--do);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.thanh-bai .nhan-bai b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dong-ho{margin:0 auto;display:flex;align-items:center;gap:10px;background:#F2FAF4;border:1px solid #CBE8D3;border-radius:14px;padding:6px 14px}
+.dong-ho svg{width:22px;height:22px;color:var(--xanh)}
+.dong-ho small{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#4E7A5B;font-weight:700}
+.dong-ho b{font-variant-numeric:tabular-nums;font-size:21px;line-height:1.1;letter-spacing:.02em}
+.dong-ho.gap{background:#FFF4E5;border-color:#F5D29A} .dong-ho.gap svg{color:var(--vang-dam)} .dong-ho.gap b{color:#A85E00}
+.mang{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--xanh);background:#F2FAF4;border-radius:999px;padding:3px 9px}
+.mang i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.mang.mat{color:var(--loi);background:#FFF1F1}
+.nguoi-thi{display:flex;align-items:center;gap:10px;min-width:0}
+.nguoi-thi .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(145deg,var(--do),var(--do-dam));color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.nguoi-thi div{min-width:0} .nguoi-thi b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px} .nguoi-thi small{color:var(--phu);font-size:12px}
 
-.cau-the{padding:20px 18px}
-.cau-dau{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
-.so-cau{font-weight:800;color:var(--do);font-size:15px;letter-spacing:.02em}
-.chuyen-de{font-size:12.5px;background:var(--vang-nhat);color:#7A4D00;padding:3px 9px;border-radius:20px;font-weight:600}
-.noi-dung{font-size:17.5px;font-weight:600;line-height:1.5;margin:4px 0 16px}
-.pa{display:flex;gap:12px;width:100%;text-align:left;border:1.5px solid #E2D6BE;background:#fff;border-radius:12px;padding:13px 14px;margin-bottom:10px;cursor:pointer;line-height:1.5;font-size:16px;transition:border-color .12s,background .12s}
-.pa:hover{border-color:#C9B48F}
-.pa .chu-cai{flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid #C9B48F;display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--chu-phu)}
+.the-cau{background:#fff;border:1px solid var(--vien);border-radius:20px;padding:22px 24px 20px;box-shadow:0 1px 3px rgba(13,27,42,.04)}
+.cd-dau{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:12px;margin-bottom:14px;border-bottom:1px dashed #EEDFD2}
+.cd-so{font-size:12px;font-weight:800;color:#8A5300;background:var(--vang-nhat);padding:4px 10px;border-radius:999px;letter-spacing:.03em}
+.cd-ten{font-weight:700;color:var(--do-dam);font-size:14.5px}
+.so-cau{display:inline-block;background:#FDECEF;color:var(--do);font-weight:800;border-radius:10px;padding:5px 12px;font-size:15px;margin-bottom:10px}
+.noi-dung{font-size:18px;font-weight:600;line-height:1.55;margin:0 0 16px}
+.pa{display:flex;gap:14px;width:100%;text-align:left;border:1.5px solid #ECE0D4;background:#FCFAF8;border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer;line-height:1.55;font-size:16px;transition:border-color .12s,background .12s}
+.pa:hover{border-color:#D9BFA8;background:#fff}
+.pa .cc{flex:none;width:32px;height:32px;border-radius:50%;border:1.5px solid #CDB9A5;display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--phu);background:#fff}
 .pa.chon{border-color:var(--do);background:#FFF4F5}
-.pa.chon .chu-cai{background:var(--do);border-color:var(--do);color:#fff}
-.dieu-huong{display:flex;gap:10px;margin-top:6px}
+.pa.chon .cc{background:var(--do);border-color:var(--do);color:#fff}
+.dieu-huong{display:flex;gap:10px;margin-top:8px}
 .dieu-huong .nut{flex:1}
 
-.luoi-dau{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
-.luoi-dau b{font-size:15px}
-.luoi{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:7px;margin-top:12px}
-.luoi button{height:42px;border-radius:9px;border:1.5px solid #E2D6BE;background:#fff;font-weight:700;cursor:pointer;font-size:14.5px}
-.luoi button.da{background:var(--vang-nhat);border-color:var(--vang);color:#7A4D00}
+.bang-ben{position:sticky;top:86px;background:#fff;border:1px solid var(--vien);border-radius:20px;padding:16px;box-shadow:0 1px 3px rgba(13,27,42,.04)}
+.bang-ben-dau{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.bang-ben-dau b{font-size:15.5px} .bang-ben-dau span{font-size:13.5px;color:var(--phu)} .bang-ben-dau span b{color:var(--xanh);font-size:15px}
+.vach-td{height:6px;background:#F0E7DE;border-radius:6px;overflow:hidden;margin-bottom:10px} .vach-td i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--xanh),#36A35A);transition:width .25s}
+.chu-thich{display:flex;gap:14px;font-size:12.5px;color:var(--phu);margin-bottom:8px}
+.chu-thich span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;border:1.5px solid #D9C9B8;margin-right:5px;vertical-align:-1px}
+.chu-thich .c1::before{background:var(--xanh);border-color:var(--xanh)}
+.luoi-cuon{max-height:calc(100vh - 340px);overflow:auto;padding-right:4px;margin-right:-4px}
+.luoi-nhom{margin-bottom:10px}
+.luoi-nhom h4{margin:6px 0 6px;font-size:12px;color:var(--do-dam);text-transform:uppercase;letter-spacing:.04em;font-weight:800}
+.luoi{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.luoi button{height:36px;border-radius:9px;border:1.5px solid #E7D9CC;background:#fff;font-weight:700;cursor:pointer;font-size:13.5px;padding:0}
+.luoi button.da{background:#EAF6EE;border-color:#9CD3AE;color:var(--xanh)}
 .luoi button.hien{outline:2.5px solid var(--do);outline-offset:1px}
-.chu-thich{display:flex;gap:14px;font-size:13px;color:var(--chu-phu);margin-top:10px;flex-wrap:wrap}
-.chu-thich span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid #E2D6BE;margin-right:5px;vertical-align:-1px}
-.chu-thich .c1::before{background:var(--vang-nhat);border-color:var(--vang)}
 
-/* ===== Kết quả ===== */
-.kq{text-align:center;padding:28px 18px}
-.huy-hieu{width:150px;height:150px;border-radius:50%;margin:4px auto 16px;display:grid;place-items:center;position:relative;
-  background:radial-gradient(circle closest-side,#fff 0 82%,transparent 83%),conic-gradient(var(--do) var(--pt,0%),#EFE6D3 0)}
-.huy-hieu b{font-size:40px;line-height:1;color:var(--chu)}
-.huy-hieu small{display:block;font-size:13px;color:var(--chu-phu);margin-top:4px}
-.ket-luan{display:inline-block;font-weight:800;font-size:19px;letter-spacing:.04em;padding:9px 18px;border-radius:30px;margin-bottom:10px}
-.ket-luan.dat{background:var(--do);color:#fff;box-shadow:0 0 0 4px rgba(245,166,35,.45)}
-.ket-luan.chua{background:#E9ECEF;color:var(--chu)}
-.tt-kq{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;text-align:left;max-width:440px;margin:16px auto 0;font-size:15px}
-.tt-kq dt{color:var(--chu-phu)} .tt-kq dd{margin:0;font-weight:600}
+/* ================= KẾT QUẢ ================= */
+.ket-qua{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:26px 20px 170px}
+body.dang-thi .dau .phai{display:none}
+.the-kq{background:#fff;border-radius:24px;padding:30px 24px;text-align:center;box-shadow:var(--bong);border:1px solid #F3E4DA}
+.vong{width:184px;height:184px;border-radius:50%;margin:10px auto 16px;display:grid;place-items:center;background:radial-gradient(circle closest-side,#fff 0 82%,transparent 83%),conic-gradient(var(--do) var(--pt,0%),#F0E6DA 0)}
+.vong b{font-size:34px;line-height:1;font-weight:900;letter-spacing:-.02em}
+.vong small{display:block;font-size:13px;color:var(--phu);margin-top:4px}
+.ket-luan{display:inline-block;font-weight:900;font-size:19px;letter-spacing:.05em;padding:10px 22px;border-radius:999px;margin-bottom:14px}
+.ket-luan.dat{background:linear-gradient(180deg,#D51A36,var(--do));color:#fff;box-shadow:0 0 0 5px rgba(245,166,35,.45)}
+.ket-luan.chua{background:#EDEFF2;color:var(--chu)}
+.tt-kq{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;text-align:left;max-width:480px;margin:10px auto 0;font-size:15px}
+.tt-kq dt{color:var(--phu)} .tt-kq dd{margin:0;font-weight:600}
+.hang-db{margin:18px auto 0;max-width:480px;background:var(--vang-nhat);border:1px solid #F5D9A0;border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;text-align:left}
+.hang-db .so-hang{font-size:26px;font-weight:900;color:var(--do);min-width:58px;text-align:center}
+.hang-db small{color:#7A4D00}
+.nut-kq{display:grid;gap:10px;margin-top:16px}
 
-/* ===== Hộp thoại, thông báo ===== */
+/* ================= BẢNG XẾP HẠNG (cửa sổ & màn hình TV) ================= */
 .man{position:fixed;inset:0;background:rgba(13,27,42,.55);display:grid;place-items:center;padding:16px;z-index:100}
-.hop{background:#fff;border-radius:16px;max-width:420px;width:100%;padding:22px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.hop h3{margin:0 0 8px;font-size:18px}
-.hop p{margin:0 0 16px;color:var(--chu-phu)}
-.hop .nhom-nut{display:flex;gap:10px}
-.hop .nhom-nut .nut{flex:1}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--chu);color:#fff;padding:11px 16px;border-radius:10px;font-size:14.5px;z-index:120;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.quay{width:20px;height:20px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:q .8s linear infinite;display:inline-block}
-.quay.dam{border-color:rgba(200,16,46,.2);border-top-color:var(--do)}
-@keyframes q{to{transform:rotate(360deg)}}
-.cho{text-align:center;padding:40px 10px;color:var(--chu-phu)}
-.chan{text-align:center;font-size:12.5px;color:var(--chu-phu);padding:8px 16px 26px}
+.hop{background:#fff;border-radius:20px;max-width:440px;width:100%;padding:24px 22px;box-shadow:0 24px 70px rgba(0,0,0,.3);max-height:92vh;overflow:auto}
+.hop h3{margin:0 0 8px;font-size:19px}
+.hop p{margin:0 0 16px;color:var(--phu)}
+.hop .nhom-nut{display:flex;gap:10px} .hop .nhom-nut .nut{flex:1}
+.hop.rong{max-width:880px;padding:0}
+.bxh-dau{position:sticky;top:0;background:linear-gradient(100deg,var(--do-sau),var(--do));color:#fff;padding:18px 22px;display:flex;gap:14px;align-items:center;z-index:2}
+.bxh-dau h3{margin:0;font-size:20px;color:#fff}
+.bxh-dau small{color:#FFE0E5}
+.bxh-dau .dong{margin-left:auto;background:rgba(255,255,255,.15);border:0;color:#fff;width:38px;height:38px;border-radius:50%;font-size:20px;cursor:pointer}
+.bxh-than{padding:16px 22px 22px}
+.bxh-loc{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.bxh-loc .o{padding-left:13px;max-width:280px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid #F3EAE0;font-size:14.5px}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:#7A5A3A;background:#FBF4EA;position:sticky;top:0}
+td.so,th.so{text-align:right}
+.hang{display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:9px;font-weight:800;background:#F4EFE9;color:#5A4A3A}
+tr.t1 .hang{background:linear-gradient(145deg,#F7C548,#D98A0B);color:#fff} tr.t2 .hang{background:linear-gradient(145deg,#C9CED6,#8E97A4);color:#fff} tr.t3 .hang{background:linear-gradient(145deg,#E2A574,#B06A33);color:#fff}
+tr.t1 td,tr.t2 td,tr.t3 td{font-weight:700}
+.mo-chu{color:#B4A898}
 
-@media (max-width:420px){
-  .dau h1{font-size:16px} .logo{width:50px;height:50px} .logo img{width:32px}
+.tv{position:relative;z-index:1;min-height:100vh;padding:24px 32px 40px;font-size:20px}
+.tv table td,.tv table th{font-size:20px;padding:12px 14px}
+.tv .buc .ten{font-size:18px} .tv .buc .huy{width:60px;height:60px;font-size:26px}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--chu);color:#fff;padding:11px 16px;border-radius:12px;font-size:14.5px;z-index:120;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.quay{width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:q .8s linear infinite;display:inline-block}
+.quay.dam{border-color:rgba(200,16,46,.18);border-top-color:var(--do)}
+@keyframes q{to{transform:rotate(360deg)}}
+.chan{position:relative;z-index:2;text-align:center;color:#FFE2E6;font-size:13px;padding:0 16px 18px;margin-top:-58px}
+#qrHop canvas,#qrHop img{margin:6px auto 12px;display:block;width:240px;height:240px}
+
+/* ================= ĐIỆN THOẠI ================= */
+@media (max-width:980px){
+  .luoi-chinh{grid-template-columns:1fr;gap:20px;padding-top:22px}
+  .the-form{position:static;order:2} .cot-trai{display:contents}
+  .gioi-thieu{order:1} .khoi-tl{order:3} .khoi-bxh{order:4}
+  .lam-bai{grid-template-columns:1fr}
+  .bang-ben{position:static} .luoi-cuon{max-height:none}
+  .luoi{grid-template-columns:repeat(8,1fr)}
+}
+@media (max-width:640px){
+  .dau-trong{padding:9px 14px} .dau .logo{width:40px;height:40px}
+  .dau .ten-dv{font-size:13px} .dau .ten-dv small{display:none}
+  .nut-dau .chu{display:none} .nut-dau{padding:8px 10px}
+  .luoi-chinh{padding:18px 16px 120px}
+  .mo-ta{font-size:15.5px}
+  .chip{min-width:0;flex:1 1 calc(50% - 10px);padding:9px 12px} .chip b{font-size:19px}
+  .the-form{padding:22px 18px;border-radius:20px}
   .lua-chon{grid-template-columns:1fr}
+  .lam-bai{padding:12px 12px 30px}
+  .thanh-bai-trong{padding:8px 12px;gap:8px}
+  .thanh-bai .nhan-bai,.nguoi-thi div{display:none}
+  .dong-ho{margin:0 auto 0 0;padding:5px 12px} .dong-ho b{font-size:20px} .dong-ho svg,.dong-ho small{display:none}
+  .mang span,.nguoi-thi{display:none} .mang{padding:6px} .mang i{width:9px;height:9px}
+  #nutNopTren{white-space:nowrap;padding:10px 14px!important}
+  .the-cau{padding:18px 16px;border-radius:16px}
   .noi-dung{font-size:16.5px}
-  .qd b{font-size:19px}
+  .luoi{grid-template-columns:repeat(7,1fr)}
+  .buc .ten{font-size:12.5px}
+  th,td{padding:8px 6px;font-size:13.5px}
+  .an-dt{display:none}
 }
 </style>
 </head>
@@ -155,173 +268,216 @@ h2{font-size:18px;margin:0 0 12px;line-height:1.35}
 
 <header class="dau">
   <div class="dau-trong">
-    <div class="logo"><img src="assets/logo.png" alt="Búa liềm"></div>
-    <div>
-      <div class="nho" id="donViToChuc">Tỉnh ủy Tuyên Quang</div>
-      <h1 id="tenDot">Đánh giá nhận thức sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV</h1>
+    <img class="logo" src="assets/logo-tuyen-giao-160.png" alt="Logo ngành Tuyên giáo">
+    <div class="ten-dv" id="donViToChuc">Ban Tuyên giáo Tỉnh ủy Tuyên Quang<small>Cổng đánh giá nhận thức học tập Nghị quyết</small></div>
+    <div class="phai">
+      <button class="nut-dau" id="nutBxhDau" title="Bảng xếp hạng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg><span class="chu">Bảng xếp hạng</span></button>
+      <button class="nut-dau trang" id="nutQR" title="Mã QR trang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg><span class="chu">Mã QR trang</span></button>
     </div>
   </div>
 </header>
-<div class="vach"></div>
 
-<!-- Thanh đồng hồ khi làm bài -->
-<div class="thanh an" id="thanhLamBai">
-  <div class="thanh-trong">
-    <div class="dong-ho" id="dongHo">45:00</div>
-    <div class="tien-do">
-      <small id="txtTienDo">Đã trả lời 0/30</small>
-      <div class="vach-td"><i id="vachTienDo"></i></div>
+<div class="nen-tq" aria-hidden="true"></div>
+<!-- ========== TRANG CHỦ ========== -->
+<section id="mhChu" class="trang-chu">
+  <svg class="hoa-van" viewBox="0 0 200 200" fill="none" stroke="#C8102E" stroke-width=".8" aria-hidden="true">
+    <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="84"/><circle cx="100" cy="100" r="66"/><circle cx="100" cy="100" r="48"/><circle cx="100" cy="100" r="30"/>
+    <path d="M100 76 L106 94 L124 100 L106 106 L100 124 L94 106 L76 100 L94 94 Z"/>
+    <g id="tia"><path d="M100 4 v12 M100 184 v12 M4 100 h12 M184 100 h12"/></g>
+    <use href="#tia" transform="rotate(22.5 100 100)"/><use href="#tia" transform="rotate(45 100 100)"/><use href="#tia" transform="rotate(67.5 100 100)"/>
+    <path d="M100 34 l4 8 h-8z M166 100 l-8 4 v-8z M100 166 l-4 -8 h8z M34 100 l8 -4 v8z" />
+  </svg>
+  <svg class="song" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 40 C240 10 420 70 720 44 S1200 12 1440 40 V90 H0Z" fill="#F7C6CE" opacity=".6"/>
+    <path d="M0 58 C260 34 480 86 760 60 S1220 34 1440 58 V90 H0Z" fill="#C8102E" opacity=".85"/>
+    <path d="M0 74 C300 58 520 92 800 76 S1240 60 1440 74 V90 H0Z" fill="#9E0B22"/>
+  </svg>
+
+  <div class="luoi-chinh">
+    <div class="cot-trai">
+      <div class="gioi-thieu">
+        <span class="nhan-the"><i></i>Học tập Nghị quyết</span>
+        <h1 class="tieu-de" id="tieuDe">Đánh giá nhận thức<span>sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV</span></h1>
+        <p class="mo-ta">Dành cho cán bộ, đảng viên toàn tỉnh tham gia đánh giá nhận thức về các nghị quyết, quy định, kết luận của Hội nghị lần thứ tư Ban Chấp hành Trung ương Đảng khóa XIV.</p>
+        <div class="gach"></div>
+        <div class="chip-tt">
+          <div class="chip"><b id="cSoCau">65</b><span>câu hỏi · <span id="cSoCD">6</span> chuyên đề</span></div>
+          <div class="chip"><b id="cThoiGian">120</b><span>phút làm bài</span></div>
+          <div class="chip"><b id="cDat">46/65</b><span>câu đúng là đạt</span></div>
+          <div class="chip"><b id="cSoLan">3</b><span>lần làm tối đa</span></div>
+        </div>
+        <div class="trang-thai" id="trangThai"><span class="cham"></span><span id="trangThaiChu">Đang tải thông tin đợt đánh giá…</span></div>
+      </div>
+
+      <div class="khoi khoi-tl">
+        <div class="khoi-dau"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span><h2>Danh mục tài liệu</h2></div>
+        <ol class="tl" id="dsTaiLieu"></ol>
+        <button class="nut-mo-rong an" id="nutTL">Xem đầy đủ ▾</button>
+      </div>
+
+      <div class="khoi khoi-bxh">
+        <div class="khoi-dau"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM17 6h3v2a3 3 0 0 1-3 3M7 6H4v2a3 3 0 0 0 3 3"/></svg></span><h2>Bảng xếp hạng các đảng bộ</h2>
+          <button class="nut nut-phu gian" id="nutXemBxh" style="padding:7px 12px;font-size:13.5px;border-radius:10px">Xem tất cả</button></div>
+        <div class="buc" id="bucVinhDanh"></div>
+        <div class="bxh-tom"><span id="bxhTom">Đang tải…</span><span id="bxhCapNhat"></span></div>
+      </div>
     </div>
-    <button class="nut nut-vang" id="nutNopTren">Nộp bài</button>
+
+    <!-- Thẻ thông tin người tham gia -->
+    <div class="the-form" id="theForm">
+      <div class="ic-dau"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+      <div class="nho">Dành cho cán bộ, đảng viên</div>
+      <h2>Thông tin người tham gia</h2>
+      <p class="phu">Nhập đúng thông tin để được ghi nhận kết quả</p>
+
+      <div id="formDong" class="an"><div class="dong-lai"><div class="bieu" id="dongBieu">🕗</div><h3 id="dongTieuDe"></h3><p id="dongNoiDung"></p></div></div>
+
+      <form id="formTT" novalidate autocomplete="on" class="an">
+        <div id="tbThuNghiem" class="bang-tb thu an"><b>Đang chạy thử.</b> Kết quả lúc này chỉ để kiểm tra, không tính vào kết quả chính thức.</div>
+        <div id="tbChung" class="bang-tb do an"></div>
+        <div class="truong">
+          <label class="nhan" for="hoTen">Họ và tên <i>*</i></label>
+          <div class="o-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <input class="o" id="hoTen" name="name" autocomplete="name" maxlength="100" placeholder="Ví dụ: Nguyễn Văn An"></div>
+        </div>
+        <div class="truong">
+          <label class="nhan" for="chucVu">Chức vụ <i>*</i></label>
+          <div class="o-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5"/></svg>
+          <input class="o" id="chucVu" maxlength="200" placeholder="Ví dụ: Bí thư Chi bộ, Chuyên viên, Đảng viên"></div>
+        </div>
+        <div class="truong">
+          <label class="nhan" for="donVi">Đơn vị công tác <i>*</i></label>
+          <div class="o-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg>
+          <input class="o" id="donVi" maxlength="200" placeholder="Ví dụ: UBND xã…, Trường THCS…, Thôn…"></div>
+        </div>
+        <div class="truong">
+          <label class="nhan" for="timDangBo">Thuộc Đảng bộ <i>*</i></label>
+          <div class="chon-db o-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="o" id="timDangBo" placeholder="Gõ tên xã, phường, đảng bộ để tìm…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="dsDangBo">
+            <div class="ds-db an" id="dsDangBo" role="listbox"></div>
+          </div>
+        </div>
+        <div class="truong">
+          <span class="nhan">Chức vụ lãnh đạo, quản lý <i>*</i></span>
+          <div class="lua-chon">
+            <label><input type="radio" name="lanhDao" value="true"><span>Có giữ chức vụ lãnh đạo, quản lý</span></label>
+            <label><input type="radio" name="lanhDao" value="false"><span>Không giữ chức vụ lãnh đạo, quản lý</span></label>
+          </div>
+        </div>
+        <div id="loiForm" class="loi-nho an"></div>
+        <button class="nut nut-chinh rong-het" id="nutBatDau" type="submit">Bắt đầu làm bài →</button>
+      </form>
+      <div id="formCho" style="text-align:center;padding:20px"><span class="quay dam"></span></div>
+    </div>
+  </div>
+  <div class="chan" id="chanTrang">© Ban Tuyên giáo Tỉnh ủy Tuyên Quang</div>
+</section>
+
+<!-- ========== LÀM BÀI ========== -->
+<div class="thanh-bai an" id="thanhBai">
+  <div class="thanh-bai-trong">
+    <div class="nhan-bai"><small id="nhanLan">Bài đánh giá · Lần 1/3</small><b id="nhanTen">Đánh giá nhận thức</b></div>
+    <div class="dong-ho" id="dongHoKhung">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <div><small>Thời gian còn lại</small><b id="dongHo">120:00</b></div>
+    </div>
+    <span class="mang" id="mang"><i></i><span>Đã kết nối</span></span>
+    <div class="nguoi-thi"><span class="av" id="avNguoi">A</span><div><b id="tenNguoi"></b><small id="dbNguoi"></small></div></div>
+    <button class="nut nut-chinh" id="nutNopTren" style="padding:10px 16px;font-size:15px">✓ Nộp bài</button>
   </div>
 </div>
-
-<main>
-  <!-- Đang tải -->
-  <section id="mhCho" class="cho"><span class="quay dam"></span><div style="margin-top:10px">Đang tải…</div></section>
-
-  <!-- Không mở -->
-  <section id="mhDong" class="an">
-    <div class="the" style="text-align:center;padding:30px 18px">
-      <div style="font-size:42px;line-height:1">🕗</div>
-      <h2 id="dongTieuDe" style="margin-top:10px">Đợt đánh giá chưa bắt đầu</h2>
-      <p id="dongNoiDung" style="color:var(--chu-phu);margin:0"></p>
-    </div>
-  </section>
-
-  <!-- Nhập thông tin -->
-  <section id="mhThongTin" class="an">
-    <div id="tbThuNghiem" class="bang-tb thu an"><b>Chế độ thử nghiệm.</b> Kết quả làm bài lúc này chỉ để chạy thử, sẽ không tính vào kết quả chính thức.</div>
-    <div id="tbChung" class="bang-tb an"></div>
-
-    <div class="the">
-      <h2>Thể lệ</h2>
-      <div class="quydinh">
-        <div class="qd"><b id="qdSoCau">30</b><span>câu hỏi</span></div>
-        <div class="qd"><b id="qdThoiGian">45</b><span>phút làm bài</span></div>
-        <div class="qd"><b id="qdDat">21/30</b><span>câu đúng là đạt</span></div>
-      </div>
-      <p class="ghichu" id="qdGhiChu">Mỗi câu có một đáp án đúng. Hết giờ, hệ thống tự động nộp bài. Câu chưa trả lời tính là sai.</p>
-    </div>
-
-    <form class="the" id="formTT" novalidate autocomplete="on">
-      <h2>Thông tin cán bộ, đảng viên</h2>
-      <div class="truong">
-        <label class="nhan" for="hoTen">Họ và tên <i>*</i></label>
-        <input class="o" id="hoTen" name="name" autocomplete="name" maxlength="100" placeholder="VD: Nguyễn Văn A">
-      </div>
-      <div class="truong">
-        <label class="nhan" for="chucVu">Chức vụ <i>*</i></label>
-        <input class="o" id="chucVu" maxlength="200" placeholder="VD: Bí thư Chi bộ, Chuyên viên, Đảng viên…">
-      </div>
-      <div class="truong">
-        <label class="nhan" for="donVi">Đơn vị công tác <i>*</i></label>
-        <input class="o" id="donVi" maxlength="200" placeholder="VD: UBND xã…, Trường THCS…, Thôn…">
-      </div>
-      <div class="truong">
-        <label class="nhan" for="timDangBo">Thuộc Đảng bộ <i>*</i></label>
-        <div class="chon-db">
-          <input class="o" id="timDangBo" placeholder="Gõ tên xã, phường hoặc đảng bộ để tìm…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="dsDangBo">
-          <div class="ds-db an" id="dsDangBo" role="listbox"></div>
+<section id="mhLamBai" class="an">
+  <div class="lam-bai">
+    <div>
+      <div id="tbThuNghiem2" class="bang-tb thu an">Đang chạy thử — kết quả không tính chính thức.</div>
+      <div class="the-cau">
+        <div class="cd-dau"><span class="cd-so" id="cdSo">Chuyên đề 1/6</span><span class="cd-ten" id="cdTen"></span></div>
+        <span class="so-cau" id="soCau">Câu 1</span>
+        <div class="noi-dung" id="noiDung"></div>
+        <div id="dsPhuongAn"></div>
+        <div class="dieu-huong">
+          <button class="nut nut-phu" id="nutTruoc">‹ Câu trước</button>
+          <button class="nut nut-chinh" id="nutSau">Câu tiếp ›</button>
         </div>
       </div>
-      <div class="truong">
-        <span class="nhan" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">Chức vụ lãnh đạo, quản lý <i style="color:var(--do);font-style:normal">*</i></span>
-        <div class="lua-chon">
-          <label><input type="radio" name="lanhDao" value="true"><span>Có giữ chức vụ lãnh đạo, quản lý</span></label>
-          <label><input type="radio" name="lanhDao" value="false"><span>Không giữ chức vụ lãnh đạo, quản lý</span></label>
-        </div>
-      </div>
-      <div id="loiForm" class="loi-nho an" style="margin:-4px 0 12px"></div>
-      <button class="nut nut-chinh rong-het" id="nutBatDau" type="submit">Bắt đầu làm bài</button>
-    </form>
-  </section>
+    </div>
+    <aside class="bang-ben">
+      <div class="bang-ben-dau"><b>Danh sách câu hỏi</b><span><b id="soDaLam">0</b>/<span id="tongCau">65</span> câu</span></div>
+      <div class="vach-td"><i id="vachTienDo"></i></div>
+      <div class="chu-thich"><span class="c1">Đã làm</span><span>Chưa làm</span></div>
+      <div class="luoi-cuon" id="luoiCuon"></div>
+      <button class="nut nut-chinh rong-het" id="nutNopDuoi" style="margin-top:12px"><span>✓ Nộp bài (<b id="nopDem">0/65</b>)</span></button>
+    </aside>
+  </div>
+</section>
 
-  <!-- Làm bài -->
-  <section id="mhLamBai" class="an">
-    <div id="tbThuNghiem2" class="bang-tb thu an" style="margin-bottom:12px"><b>Thử nghiệm</b> — kết quả không tính chính thức.</div>
-    <div class="the cau-the">
-      <div class="cau-dau">
-        <span class="so-cau" id="soCau">Câu 1/30</span>
-        <span class="chuyen-de" id="chuyenDe"></span>
-      </div>
-      <div class="noi-dung" id="noiDung"></div>
-      <div id="dsPhuongAn"></div>
-      <div class="dieu-huong">
-        <button class="nut nut-phu" id="nutTruoc">‹ Câu trước</button>
-        <button class="nut nut-chinh" id="nutSau">Câu tiếp ›</button>
-      </div>
+<!-- ========== ĐANG NỘP / KẾT QUẢ ========== -->
+<section id="mhDangNop" class="an ket-qua">
+  <div class="the-kq">
+    <div id="nopQuay"><span class="quay dam" style="width:38px;height:38px;border-width:4px"></span></div>
+    <h2 id="nopTieuDe" style="margin:14px 0 6px">Đang nộp bài…</h2>
+    <p id="nopNoiDung" style="color:var(--phu);margin:0">Đồng chí vui lòng không tắt trang.</p>
+    <button class="nut nut-chinh an" id="nutNopLai" style="margin-top:14px">Nộp lại</button>
+  </div>
+</section>
+<section id="mhKetQua" class="an ket-qua">
+  <div id="tbThuNghiem3" class="bang-tb thu an">Đây là kết quả <b>chạy thử</b>, không tính vào kết quả chính thức.</div>
+  <div class="the-kq">
+    <div style="font-size:14px;color:var(--phu)">Kết quả đã được ghi nhận</div>
+    <div class="vong" id="vong"><div><b id="kqDiem">0/65</b><small>câu trả lời đúng</small></div></div>
+    <div class="ket-luan" id="kqKetLuan">ĐẠT YÊU CẦU</div>
+    <dl class="tt-kq">
+      <dt>Họ và tên</dt><dd id="kqTen"></dd>
+      <dt>Đảng bộ</dt><dd id="kqDangBo"></dd>
+      <dt>Yêu cầu đạt</dt><dd id="kqYeuCau"></dd>
+      <dt>Nộp lúc</dt><dd id="kqLuc"></dd>
+      <dt id="kqLanDt">Lần làm bài</dt><dd id="kqLan"></dd>
+    </dl>
+    <div class="hang-db an" id="hangDb"><div class="so-hang" id="hangSo">–</div><div><b id="hangTen"></b><br><small id="hangChu"></small></div></div>
+    <div class="nut-kq">
+      <button class="nut nut-chinh an" id="nutLamLai">Làm lại bài đánh giá</button>
+      <button class="nut nut-phu" id="nutXemBxh2">🏆 Xem bảng xếp hạng</button>
+      <button class="nut nut-phu" id="nutVeChu">Về trang chủ</button>
     </div>
-    <div class="the">
-      <div class="luoi-dau" id="luoiDau"><b>Danh sách câu hỏi</b><span id="luoiMuiTen">▾</span></div>
-      <div id="luoiBox">
-        <div class="luoi" id="luoi"></div>
-        <div class="chu-thich"><span class="c1">Đã trả lời</span><span>Chưa trả lời</span></div>
-      </div>
-    </div>
-    <button class="nut nut-chinh rong-het" id="nutNopDuoi" style="margin-top:14px">Nộp bài</button>
-  </section>
+  </div>
+</section>
 
-  <!-- Đang nộp / lỗi nộp -->
-  <section id="mhDangNop" class="an">
-    <div class="the" style="text-align:center;padding:30px 18px">
-      <div id="nopQuay"><span class="quay dam" style="width:34px;height:34px;border-width:4px"></span></div>
-      <h2 style="margin-top:14px" id="nopTieuDe">Đang nộp bài…</h2>
-      <p id="nopNoiDung" style="color:var(--chu-phu);margin:0 0 6px">Đồng chí vui lòng không tắt trang.</p>
-      <button class="nut nut-chinh an" id="nutNopLai" style="margin-top:12px">Nộp lại</button>
-    </div>
-  </section>
-
-  <!-- Kết quả -->
-  <section id="mhKetQua" class="an">
-    <div id="tbThuNghiem3" class="bang-tb thu an">Đây là kết quả <b>thử nghiệm</b>, không tính vào kết quả chính thức.</div>
-    <div class="the kq">
-      <div style="font-size:14px;color:var(--chu-phu);margin-bottom:4px">Kết quả đã được ghi nhận</div>
-      <div class="huy-hieu" id="huyHieu"><div><b id="kqDiem">0/30</b><small>câu trả lời đúng</small></div></div>
-      <div class="ket-luan" id="kqKetLuan">ĐẠT YÊU CẦU</div>
-      <dl class="tt-kq">
-        <dt>Họ và tên</dt><dd id="kqTen"></dd>
-        <dt>Đảng bộ</dt><dd id="kqDangBo"></dd>
-        <dt>Yêu cầu đạt</dt><dd id="kqYeuCau"></dd>
-        <dt>Nộp lúc</dt><dd id="kqLuc"></dd>
-      </dl>
-    </div>
-    <button class="nut nut-phu rong-het an" id="nutLamLai" style="margin-top:14px">Làm lại bài đánh giá</button>
-  </section>
-</main>
-<div class="chan" id="chanTrang">Đơn vị tổ chức: Tỉnh ủy Tuyên Quang</div>
+<!-- ========== MÀN HÌNH TV (index.html#bang-xep-hang) ========== -->
+<section id="mhTV" class="an tv"></section>
 
 <script>
 (function(){
 "use strict";
 const URL_SB = (window.CAU_HINH||{}).SUPABASE_URL, KEY = (window.CAU_HINH||{}).SUPABASE_KEY;
-const KHOA_LUU = "dgnt_bai_v1", KHOA_TT = "dgnt_thongtin_v1";
+const KHOA_LUU = "dgnt_bai_v3", KHOA_TT = "dgnt_thongtin_v1";
 const $ = id => document.getElementById(id);
-const MH = ["mhCho","mhDong","mhThongTin","mhLamBai","mhDangNop","mhKetQua"];
-let dot = null, dsDB = [], dbChon = null, bai = null, timer = null, dangNop = false;
+const MH = ["mhChu","mhLamBai","mhDangNop","mhKetQua","mhTV"];
+let dot = null, dsDB = [], dbChon = null, bai = null, timer = null, dangNop = false, bxh = null, bxhHen = null;
 
 /* ---------- tiện ích ---------- */
-function hien(id){ MH.forEach(m => $(m).classList.toggle("an", m !== id)); $("thanhLamBai").classList.toggle("an", id !== "mhLamBai"); window.scrollTo(0,0); }
+function hien(id){ MH.forEach(m => $(m).classList.toggle("an", m !== id)); $("thanhBai").classList.toggle("an", id !== "mhLamBai");
+  document.body.classList.toggle("dang-thi", id === "mhLamBai"); window.scrollTo(0,0); }
 function luu(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 function doc(k){ try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } }
 function xoa(k){ try{ localStorage.removeItem(k); }catch(e){} }
 function boDau(s){ return (s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/\s+/g," ").trim(); }
 function esc(s){ return String(s??"").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-function ngayGio(iso){ const d = new Date(iso); const p = n => String(n).padStart(2,"0");
-  return `${p(d.getHours())} giờ ${p(d.getMinutes())} phút, ngày ${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()}`; }
-let toastT; function toast(msg, ms=3200){ let t = document.querySelector(".toast"); if(!t){ t = document.createElement("div"); t.className="toast"; document.body.appendChild(t); }
+const p2 = n => String(n).padStart(2,"0");
+function gioNgay(iso){ const d = new Date(iso); return `${p2(d.getHours())}:${p2(d.getMinutes())} ngày ${p2(d.getDate())}/${p2(d.getMonth()+1)}/${d.getFullYear()}`; }
+const so = n => Number(n||0).toLocaleString("vi-VN");
+let toastT; function toast(msg, ms=3400){ let t = document.querySelector(".toast"); if(!t){ t = document.createElement("div"); t.className="toast"; document.body.appendChild(t); }
   t.textContent = msg; t.classList.remove("an"); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.add("an"), ms); }
+function hop(html, rong){ const m = document.createElement("div"); m.className = "man"; m.innerHTML = `<div class="hop${rong?" rong":""}" role="dialog" aria-modal="true">${html}</div>`;
+  m.addEventListener("mousedown", e => { if (e.target === m) m.remove(); }); document.body.appendChild(m); return m; }
 function hoi(tieuDe, noiDung, nutCo="Đồng ý", nutKhong="Quay lại"){
   return new Promise(res => {
-    const m = document.createElement("div"); m.className = "man";
-    m.innerHTML = `<div class="hop" role="dialog" aria-modal="true"><h3>${esc(tieuDe)}</h3><p>${noiDung}</p>
-      <div class="nhom-nut"><button class="nut nut-phu" data-v="0">${esc(nutKhong)}</button><button class="nut nut-chinh" data-v="1">${esc(nutCo)}</button></div></div>`;
+    const m = hop(`<h3>${esc(tieuDe)}</h3><p>${noiDung}</p><div class="nhom-nut"><button class="nut nut-phu" data-v="0">${esc(nutKhong)}</button><button class="nut nut-chinh" data-v="1">${esc(nutCo)}</button></div>`);
     m.addEventListener("click", e => { const v = e.target.closest("[data-v]"); if(v){ m.remove(); res(v.dataset.v==="1"); } });
-    document.body.appendChild(m); m.querySelector('[data-v="1"]').focus();
+    m.querySelector('[data-v="1"]').focus();
   });
 }
 
-/* ---------- gọi Supabase (REST RPC, không cần thư viện) ---------- */
+/* ---------- gọi Supabase (REST RPC) ---------- */
 async function rpc(ham, body){
   const h = { "apikey": KEY, "Content-Type": "application/json" };
   if (KEY && KEY.startsWith("eyJ")) h["Authorization"] = "Bearer " + KEY;
@@ -341,36 +497,61 @@ async function rpc(ham, body){
 
 /* ---------- khởi động ---------- */
 async function khoiDong(){
-  if (!URL_SB || URL_SB.includes("YOUR-PROJECT")){ $("mhCho").innerHTML = "Chưa cấu hình kết nối máy chủ (config.js)."; return; }
+  if (!URL_SB || URL_SB.includes("YOUR-PROJECT")){ $("formCho").textContent = "Chưa cấu hình kết nối máy chủ (config.js)."; return; }
+  if (location.hash === "#bang-xep-hang"){ return moTV(); }
   const cu = doc(KHOA_LUU);
-  if (cu && cu.id && !cu.ketQua){ bai = cu; batDauDongHo(); veCau(); hien("mhLamBai"); toast("Đã khôi phục bài đang làm dở."); }
+  if (cu && cu.id && !cu.ketQua){ bai = cu; batDauDongHo(); veLuoi(); veCau(); hien("mhLamBai"); toast("Đã khôi phục bài đang làm dở."); }
   else if (cu && cu.ketQua){ hienKetQua(cu); }
   try { dot = await rpc("thong_tin_dot"); }
-  catch(e){ if (!bai && !(cu&&cu.ketQua)){ $("mhCho").innerHTML = `<p>${esc(e.message)}</p><button class="nut nut-chinh" onclick="location.reload()">Tải lại</button>`; } return; }
-  dsDB = dot.dang_bo || [];
-  $("tenDot").textContent = dot.ten_dot; $("donViToChuc").textContent = dot.don_vi_to_chuc;
-  $("chanTrang").textContent = "Đơn vị tổ chức: " + dot.don_vi_to_chuc;
-  const canDat = Math.ceil(dot.ty_le_dat * dot.so_cau / 100);
-  $("qdSoCau").textContent = dot.so_cau; $("qdThoiGian").textContent = dot.thoi_gian_lam_bai; $("qdDat").textContent = `${canDat}/${dot.so_cau}`;
-  if (dot.thong_bao){ $("tbChung").textContent = dot.thong_bao; $("tbChung").classList.remove("an"); }
-  if (bai || (cu && cu.ketQua)) { if (cu && cu.ketQua) $("nutLamLai").classList.toggle("an", !dot.cho_thi_lai || !["dang_mo","thu_nghiem"].includes(dot.trang_thai)); return; }
-  moManHinhTheoTrangThai();
+  catch(e){ $("formCho").innerHTML = `<p>${esc(e.message)}</p><button class="nut nut-chinh" onclick="location.reload()">Tải lại</button>`; return; }
+  apDungThongTin();
+  if (cu && cu.ketQua) capNhatNutLamLai(cu.ketQua);
+  taiBxh();
 }
-function moManHinhTheoTrangThai(){
-  const tt = dot.trang_thai;
+function apDungThongTin(){
+  dsDB = dot.dang_bo || [];
+  const ten = dot.ten_dot || "", m = /^(Đánh giá nhận thức)\s+(.*)$/i.exec(ten);
+  $("tieuDe").innerHTML = m ? `${esc(m[1])}<span>${esc(m[2].replace(/\.$/,""))}</span>` : esc(ten);
+  $("donViToChuc").innerHTML = `${esc(dot.don_vi_to_chuc)}<small>Cổng đánh giá nhận thức học tập Nghị quyết</small>`;
+  $("chanTrang").textContent = "© " + dot.don_vi_to_chuc;
+  document.title = "Đánh giá nhận thức · " + dot.don_vi_to_chuc;
+  const canDat = Math.ceil(dot.ty_le_dat * dot.so_cau / 100), tl = dot.tai_lieu || [];
+  $("cSoCau").textContent = dot.so_cau; $("cThoiGian").textContent = dot.thoi_gian_lam_bai;
+  $("cDat").textContent = `${canDat}/${dot.so_cau}`; $("cSoLan").textContent = dot.so_lan_toi_da; $("cSoCD").textContent = tl.length || "các";
+  // danh mục tài liệu
+  $("dsTaiLieu").innerHTML = tl.map((t, i) => `<li class="${i >= 3 ? "tl-an" : ""}"><span><b>${esc(t.ten)}</b>${t.mo_ta && t.mo_ta !== t.ten ? " — " + esc(t.mo_ta.replace(t.ten, "").replace(/^[,\s]+/, "")) : ""}</span></li>`).join("")
+    || '<li><span>Đang cập nhật.</span></li>';
+  const coAn = tl.length > 3 && window.matchMedia("(max-width:980px)").matches;
+  document.querySelectorAll(".tl-an").forEach(li => li.classList.toggle("an", coAn));
+  $("nutTL").classList.toggle("an", !coAn);
+  if (dot.thong_bao){ $("tbChung").textContent = dot.thong_bao; $("tbChung").classList.remove("an"); }
+  veTrangThai(); moForm();
+}
+function veTrangThai(){
+  const tt = dot.trang_thai, el = $("trangThai"), chu = $("trangThaiChu");
+  el.className = "trang-thai" + (tt === "dang_mo" ? " mo" : (tt === "da_ket_thuc" || tt === "tam_dung") ? " dong" : "");
+  const kt = dot.dong_luc ? gioNgay(dot.dong_luc) : "", bd = dot.mo_tu ? gioNgay(dot.mo_tu) : "";
+  chu.innerHTML = {
+    dang_mo: `<b>Đang diễn ra</b> · kết thúc lúc ${kt}`,
+    thu_nghiem: `<b>Đang chạy thử</b> · chính thức từ ${bd} đến ${kt}`,
+    chua_mo: `<b>Sắp diễn ra</b> · từ ${bd} đến ${kt}`,
+    da_ket_thuc: `<b>Đã kết thúc</b> lúc ${kt}. Cảm ơn các đồng chí đã tham gia.`,
+    tam_dung: `<b>Tạm dừng</b> · đề nghị các đồng chí quay lại sau.`
+  }[tt] || "";
+}
+function moForm(){
+  const tt = dot.trang_thai; $("formCho").classList.add("an");
   if (tt === "dang_mo" || tt === "thu_nghiem"){
     $("tbThuNghiem").classList.toggle("an", tt !== "thu_nghiem");
-    dienThongTinCu(); hien("mhThongTin"); return;
+    $("formDong").classList.add("an"); $("formTT").classList.remove("an"); dienThongTinCu(); return;
   }
-  const map = {
-    chua_mo: ["Đợt đánh giá chưa bắt đầu", dot.mo_tu ? "Thời gian bắt đầu: " + ngayGio(dot.mo_tu) + "." : ""],
-    da_ket_thuc: ["Đợt đánh giá đã kết thúc", dot.dong_luc ? "Đã kết thúc lúc " + ngayGio(dot.dong_luc) + ". Cảm ơn các đồng chí đã tham gia." : ""],
-    tam_dung: ["Đợt đánh giá đang tạm dừng", "Đề nghị đồng chí quay lại sau."]
-  }[tt] || ["Không truy cập được", ""];
-  $("dongTieuDe").textContent = map[0]; $("dongNoiDung").textContent = map[1];
-  if (tt === "chua_mo" && dot.mo_tu) $("dongNoiDung").textContent += " Kết thúc: " + ngayGio(dot.dong_luc) + ".";
-  hien("mhDong");
+  const map = { chua_mo: ["🕗", "Đợt đánh giá chưa bắt đầu", dot.mo_tu ? "Bắt đầu lúc " + gioNgay(dot.mo_tu) + "." : ""],
+    da_ket_thuc: ["🏁", "Đợt đánh giá đã kết thúc", "Cảm ơn các đồng chí đã tham gia."],
+    tam_dung: ["⏸️", "Đợt đánh giá đang tạm dừng", "Đề nghị đồng chí quay lại sau."] }[tt] || ["ℹ️", "Không truy cập được", ""];
+  $("dongBieu").textContent = map[0]; $("dongTieuDe").textContent = map[1]; $("dongNoiDung").textContent = map[2];
+  $("formTT").classList.add("an"); $("formDong").classList.remove("an");
 }
+$("nutTL").onclick = () => { document.querySelectorAll(".tl-an").forEach(li => li.classList.remove("an")); $("nutTL").classList.add("an"); };
 
 /* ---------- chọn đảng bộ (tìm không dấu) ---------- */
 function veDsDB(tu){
@@ -398,7 +579,6 @@ $("dsDangBo").addEventListener("keydown", e => {
   if (e.key === "ArrowDown" && ds[i+1]){ e.preventDefault(); ds[i+1].focus(); }
   if (e.key === "ArrowUp"){ e.preventDefault(); (ds[i-1] || $("timDangBo")).focus(); }
 });
-
 function dienThongTinCu(){
   const t = doc(KHOA_TT); if (!t) return;
   $("hoTen").value = t.ho_ten||""; $("chucVu").value = t.chuc_vu||""; $("donVi").value = t.don_vi||"";
@@ -406,7 +586,7 @@ function dienThongTinCu(){
   const r = document.querySelector(`input[name=lanhDao][value="${t.lanh_dao}"]`); if (r) r.checked = true;
 }
 
-/* ---------- bắt đầu ---------- */
+/* ---------- bắt đầu làm bài ---------- */
 $("formTT").addEventListener("submit", async e => {
   e.preventDefault();
   const tt = { ho_ten: $("hoTen").value.replace(/\s+/g," ").trim(), chuc_vu: $("chucVu").value.replace(/\s+/g," ").trim(),
@@ -419,63 +599,91 @@ $("formTT").addEventListener("submit", async e => {
   if (!tt.lanh_dao) loi.push("có hay không giữ chức vụ lãnh đạo, quản lý");
   if (loi.length){ $("loiForm").textContent = "Đồng chí vui lòng nhập/chọn: " + loi.join(", ") + "."; $("loiForm").classList.remove("an"); return; }
   $("loiForm").classList.add("an");
-  const ok = await hoi("Bắt đầu làm bài?", `Thời gian làm bài là <b>${dot.thoi_gian_lam_bai} phút</b>, tính từ lúc bấm bắt đầu. Đồng chí kiểm tra lại thông tin:<br><br><b>${esc(tt.ho_ten)}</b><br>${esc(tt.chuc_vu)} — ${esc(tt.don_vi)}<br>${esc(dbChon.ten)}`, "Bắt đầu", "Sửa lại");
+  const ok = await hoi("Bắt đầu làm bài?", `Bài gồm <b>${dot.so_cau} câu</b>, thời gian <b>${dot.thoi_gian_lam_bai} phút</b> tính từ lúc bấm bắt đầu. Đồng chí kiểm tra lại thông tin:<br><br><b>${esc(tt.ho_ten)}</b><br>${esc(tt.chuc_vu)} — ${esc(tt.don_vi)}<br>${esc(dbChon.ten)}`, "Bắt đầu", "Sửa lại");
   if (!ok) return;
   const nut = $("nutBatDau"); nut.disabled = true; nut.innerHTML = '<span class="quay"></span> Đang tải đề…';
   try {
-    const r = await rpc("bat_dau_thi", { p: { ...tt, lanh_dao: tt.lanh_dao === "true" } });
+    let r;
+    for (let lan = 0; ; lan++){
+      try { r = await rpc("bat_dau_thi", { p: { ...tt, lanh_dao: tt.lanh_dao === "true" } }); break; }
+      catch(e){ if (!e.mang || lan >= 3) throw e; nut.innerHTML = `<span class="quay"></span> Mạng chậm, đang thử lại (${lan+2})…`; await new Promise(z => setTimeout(z, 1500 * (lan+1) + Math.random()*1000)); }
+    }
     luu(KHOA_TT, tt);
-    let ds = r.cau_hoi || [];
-    if (r.dao_cau_hoi){ for (let i = ds.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [ds[i], ds[j]] = [ds[j], ds[i]]; } }
+    // nhóm theo chuyên đề (giữ thứ tự chuyên đề), đảo câu trong từng chuyên đề
+    const nhom = [], theoTen = {};
+    (r.cau_hoi || []).forEach(q => { const k = q.chuyen_de || "Câu hỏi"; if (!theoTen[k]){ theoTen[k] = []; nhom.push(k); } theoTen[k].push(q); });
+    const ds = [], dsNhom = [];
+    nhom.forEach(k => { const a = theoTen[k];
+      if (r.dao_cau_hoi) for (let i = a.length-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; }
+      dsNhom.push({ ten: k, tu: ds.length, so: a.length }); ds.push(...a); });
     const lech = Date.now() - new Date(r.bay_gio).getTime();
-    bai = { id: r.id, hetGio: new Date(r.bat_dau).getTime() + r.thoi_gian_giay*1000 + lech, cauHoi: ds, traLoi: {}, hienTai: 0,
-            thuNghiem: r.thu_nghiem, hoTen: tt.ho_ten, dangBo: dbChon.ten };
-    luu(KHOA_LUU, bai); batDauDongHo(); veCau(); hien("mhLamBai");
+    bai = { id: r.id, hetGio: new Date(r.bat_dau).getTime() + r.thoi_gian_giay*1000 + lech, cauHoi: ds, nhom: dsNhom, traLoi: {}, hienTai: 0,
+            thuNghiem: r.thu_nghiem, hoTen: tt.ho_ten, dangBo: dbChon.ten, dangBoId: dbChon.id, lanThu: r.lan_thu, soLanToiDa: r.so_lan_toi_da };
+    luu(KHOA_LUU, bai); batDauDongHo(); veLuoi(); veCau(); hien("mhLamBai");
   } catch(err){
     $("loiForm").textContent = err.message; $("loiForm").classList.remove("an");
-    if (["CHUA_MO","DA_KET_THUC","TAM_DUNG"].includes(err.ma)){ try{ dot = await rpc("thong_tin_dot"); moManHinhTheoTrangThai(); }catch(e){} }
-  } finally { nut.disabled = false; nut.textContent = "Bắt đầu làm bài"; }
+    if (["CHUA_MO","DA_KET_THUC","TAM_DUNG"].includes(err.ma)){ try{ dot = await rpc("thong_tin_dot"); apDungThongTin(); }catch(e){} }
+  } finally { nut.disabled = false; nut.textContent = "Bắt đầu làm bài →"; }
 });
 
 /* ---------- làm bài ---------- */
 function soDaTL(){ return bai.cauHoi.filter(q => bai.traLoi[q.id]).length; }
-function veCau(){
-  const n = bai.cauHoi.length, i = bai.hienTai, q = bai.cauHoi[i];
+function nhomCua(i){ return bai.nhom.findIndex(n => i >= n.tu && i < n.tu + n.so); }
+function veLuoi(){
+  $("luoiCuon").innerHTML = bai.nhom.map((n, k) => `<div class="luoi-nhom"><h4>${k+1}. ${esc(n.ten)}</h4><div class="luoi">` +
+    Array.from({ length: n.so }, (_, j) => `<button data-j="${n.tu + j}" aria-label="Câu ${n.tu + j + 1}">${n.tu + j + 1}</button>`).join("") + `</div></div>`).join("");
+  $("tenNguoi").textContent = bai.hoTen; $("dbNguoi").textContent = bai.dangBo;
+  $("avNguoi").textContent = (bai.hoTen.trim().split(" ").pop() || "?")[0].toUpperCase();
+  $("nhanLan").textContent = `${bai.thuNghiem ? "Chạy thử" : "Bài đánh giá"} · Lần ${bai.lanThu || 1}/${bai.soLanToiDa || 1}`;
+  $("nhanTen").textContent = dot ? dot.ten_dot : "Đánh giá nhận thức";
+  $("tongCau").textContent = bai.cauHoi.length;
   $("tbThuNghiem2").classList.toggle("an", !bai.thuNghiem);
+}
+function veCau(){
+  const n = bai.cauHoi.length, i = bai.hienTai, q = bai.cauHoi[i], k = nhomCua(i);
+  $("cdSo").textContent = `Chuyên đề ${k+1}/${bai.nhom.length}`; $("cdTen").textContent = bai.nhom[k].ten;
   $("soCau").textContent = `Câu ${i+1}/${n}`;
-  $("chuyenDe").textContent = q.chuyen_de || ""; $("chuyenDe").classList.toggle("an", !q.chuyen_de);
   $("noiDung").textContent = q.noi_dung;
-  $("dsPhuongAn").innerHTML = ["a","b","c","d"].filter(k => q[k]).map(k => {
-    const K = k.toUpperCase(), chon = bai.traLoi[q.id] === K;
-    return `<button class="pa${chon?" chon":""}" data-k="${K}" aria-pressed="${chon}"><span class="chu-cai">${K}</span><span>${esc(q[k])}</span></button>`;
+  $("dsPhuongAn").innerHTML = ["a","b","c","d"].filter(x => q[x]).map(x => {
+    const K = x.toUpperCase(), chon = bai.traLoi[q.id] === K;
+    return `<button class="pa${chon?" chon":""}" data-k="${K}" aria-pressed="${chon}"><span class="cc">${K}</span><span>${esc(q[x])}</span></button>`;
   }).join("");
   $("nutTruoc").disabled = i === 0;
   $("nutSau").textContent = i === n-1 ? "Xem lại & nộp ›" : "Câu tiếp ›";
   const d = soDaTL();
-  $("txtTienDo").textContent = `Đã trả lời ${d}/${n}`; $("vachTienDo").style.width = (d/n*100) + "%";
-  $("luoi").innerHTML = bai.cauHoi.map((c, j) => `<button class="${bai.traLoi[c.id]?"da":""}${j===i?" hien":""}" data-j="${j}" aria-label="Câu ${j+1}">${j+1}</button>`).join("");
+  $("soDaLam").textContent = d; $("nopDem").textContent = `${d}/${n}`; $("vachTienDo").style.width = (d/n*100) + "%";
+  $("luoiCuon").querySelectorAll("button[data-j]").forEach(b => { const j = +b.dataset.j;
+    b.classList.toggle("da", !!bai.traLoi[bai.cauHoi[j].id]); b.classList.toggle("hien", j === i); });
+  const hienTai = $("luoiCuon").querySelector("button.hien"); if (hienTai && window.innerWidth > 980) hienTai.scrollIntoView({ block: "nearest" });
 }
 $("dsPhuongAn").addEventListener("click", e => {
   const b = e.target.closest(".pa"); if (!b || dangNop) return;
   const q = bai.cauHoi[bai.hienTai]; bai.traLoi[q.id] = b.dataset.k; luu(KHOA_LUU, bai); veCau();
 });
 function diToi(j){ bai.hienTai = Math.max(0, Math.min(bai.cauHoi.length-1, j)); luu(KHOA_LUU, bai); veCau();
-  const top = $("mhLamBai").getBoundingClientRect().top + window.scrollY - 70; if (window.scrollY > top) window.scrollTo({top, behavior:"smooth"}); }
+  const top = $("mhLamBai").getBoundingClientRect().top + window.scrollY - 70; if (window.scrollY > top) window.scrollTo({ top, behavior: "smooth" }); }
 $("nutTruoc").onclick = () => diToi(bai.hienTai - 1);
 $("nutSau").onclick = () => bai.hienTai === bai.cauHoi.length-1 ? xacNhanNop() : diToi(bai.hienTai + 1);
-$("luoi").addEventListener("click", e => { const b = e.target.closest("button[data-j]"); if (b) diToi(+b.dataset.j); });
-$("luoiDau").onclick = () => { const an = $("luoiBox").classList.toggle("an"); $("luoiMuiTen").textContent = an ? "▸" : "▾"; };
+$("luoiCuon").addEventListener("click", e => { const b = e.target.closest("button[data-j]"); if (b) diToi(+b.dataset.j); });
 $("nutNopTren").onclick = xacNhanNop; $("nutNopDuoi").onclick = xacNhanNop;
+document.addEventListener("keydown", e => {
+  if ($("mhLamBai").classList.contains("an") || document.querySelector(".man") || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+  if (e.key === "ArrowRight") diToi(bai.hienTai + 1); if (e.key === "ArrowLeft") diToi(bai.hienTai - 1);
+  const k = e.key.toUpperCase(); if (["A","B","C","D"].includes(k)){ const b = $("dsPhuongAn").querySelector(`[data-k="${k}"]`); if (b) b.click(); }
+});
 
-let canhBao5 = false;
+// chỉ báo mạng
+function capNhatMang(){ const on = navigator.onLine; $("mang").classList.toggle("mat", !on); $("mang").querySelector("span").textContent = on ? "Đã kết nối" : "Mất mạng – bài vẫn được lưu"; }
+window.addEventListener("online", capNhatMang); window.addEventListener("offline", capNhatMang); capNhatMang();
+
+let canhBao = {};
 function batDauDongHo(){
   clearInterval(timer);
   const chay = () => {
     const con = Math.max(0, Math.round((bai.hetGio - Date.now())/1000));
-    const p = n => String(n).padStart(2,"0");
-    $("dongHo").textContent = `${p(Math.floor(con/60))}:${p(con%60)}`;
-    $("dongHo").classList.toggle("gap", con <= 300);
-    if (con <= 300 && con > 0 && !canhBao5){ canhBao5 = true; toast("Còn 5 phút. Đồng chí kiểm tra lại các câu chưa trả lời."); }
+    $("dongHo").textContent = `${p2(Math.floor(con/60))}:${p2(con%60)}`;
+    $("dongHoKhung").classList.toggle("gap", con <= 600);
+    [[600,"Còn 10 phút."],[300,"Còn 5 phút. Đồng chí kiểm tra lại các câu chưa làm."]].forEach(([m, t]) => { if (con <= m && con > 0 && !canhBao[m]){ canhBao[m] = 1; toast(t); } });
     if (con <= 0){ clearInterval(timer); toast("Hết giờ làm bài. Hệ thống tự động nộp bài."); nop(); }
   };
   chay(); timer = setInterval(chay, 1000);
@@ -511,23 +719,110 @@ $("nutNopLai").onclick = nop;
 
 /* ---------- kết quả ---------- */
 function hienKetQua(b){
-  const k = b.ketQua; clearInterval(timer); const tt = document.querySelector(".toast"); if (tt) tt.classList.add("an");
+  const k = b.ketQua; clearInterval(timer); const t = document.querySelector(".toast"); if (t) t.classList.add("an");
   $("kqDiem").textContent = `${k.so_cau_dung}/${k.tong_so_cau}`;
-  $("huyHieu").style.setProperty("--pt", (k.so_cau_dung / k.tong_so_cau * 100) + "%");
+  $("vong").style.setProperty("--pt", (k.so_cau_dung / k.tong_so_cau * 100) + "%");
   $("kqKetLuan").textContent = k.dat ? "ĐẠT YÊU CẦU" : "CHƯA ĐẠT YÊU CẦU";
   $("kqKetLuan").className = "ket-luan " + (k.dat ? "dat" : "chua");
   $("kqTen").textContent = k.ho_ten || b.hoTen; $("kqDangBo").textContent = b.dangBo || "";
   $("kqYeuCau").textContent = `Trả lời đúng từ ${k.can_dat}/${k.tong_so_cau} câu (${k.ty_le_dat}%) trở lên`;
-  $("kqLuc").textContent = k.nop_luc ? ngayGio(k.nop_luc) : "";
+  $("kqLuc").textContent = k.nop_luc ? gioNgay(k.nop_luc) : "";
+  const nhieu = k.so_lan_toi_da > 1;
+  $("kqLan").textContent = nhieu ? `${k.so_lan}/${k.so_lan_toi_da}` + (k.so_lan > 1 && k.cao_nhat != null ? ` — kết quả cao nhất: ${k.cao_nhat}/${k.tong_so_cau} câu (${k.dat_cao_nhat ? "Đạt" : "Chưa đạt"})` : "") : "";
+  $("kqLanDt").classList.toggle("an", !nhieu); $("kqLan").classList.toggle("an", !nhieu);
   $("tbThuNghiem3").classList.toggle("an", !k.thu_nghiem);
-  $("nutLamLai").classList.toggle("an", !(dot && dot.cho_thi_lai && ["dang_mo","thu_nghiem"].includes(dot.trang_thai)));
-  hien("mhKetQua");
+  capNhatNutLamLai(k); hien("mhKetQua"); hangCuaDB();
+}
+function capNhatNutLamLai(k){
+  const con = (k.so_lan_toi_da || 1) - (k.so_lan || 1);
+  const hienNut = con > 0 && dot && ["dang_mo","thu_nghiem"].includes(dot.trang_thai);
+  $("nutLamLai").classList.toggle("an", !hienNut);
+  $("nutLamLai").textContent = `Làm lại bài đánh giá (còn ${con} lần)`;
+}
+async function hangCuaDB(){
+  const b = bai || doc(KHOA_LUU); if (!b) return;
+  try { bxh = await rpc("bang_xep_hang"); } catch(e){ return; }
+  const r = (bxh.ds || []).find(x => x.id === b.dangBoId || x.ten === b.dangBo); if (!r || !r.h) return;
+  $("hangSo").textContent = "#" + r.h; $("hangTen").textContent = r.ten;
+  $("hangChu").textContent = `đang xếp thứ ${r.h}/${bxh.so_dang_bo_co} đảng bộ đã tham gia · ${so(r.tg)} người tham gia`;
+  $("hangDb").classList.remove("an");
 }
 $("nutLamLai").onclick = async () => {
-  if (!await hoi("Làm lại bài?", "Kết quả cao nhất trong các lần làm bài của đồng chí sẽ được dùng để tổng hợp.", "Làm lại", "Hủy")) return;
-  xoa(KHOA_LUU); bai = null; canhBao5 = false;
-  if (!dot){ location.reload(); return; }
-  moManHinhTheoTrangThai();
+  const k = (bai && bai.ketQua) || (doc(KHOA_LUU) || {}).ketQua || {}, con = (k.so_lan_toi_da || 1) - (k.so_lan || 1);
+  if (!await hoi("Làm lại bài?", `Đồng chí còn <b>${con} lần</b> làm bài. Kết quả cao nhất trong các lần làm bài được dùng để tổng hợp, nên làm lại không làm giảm kết quả đã có.`, "Làm lại", "Hủy")) return;
+  xoa(KHOA_LUU); bai = null; canhBao = {}; veTrangChu();
+};
+$("nutVeChu").onclick = () => { xoa(KHOA_LUU); bai = null; veTrangChu(); };
+function veTrangChu(){ if (!dot){ location.reload(); return; } hien("mhChu"); apDungThongTin(); taiBxh(); }
+
+/* ---------- bảng xếp hạng ---------- */
+async function taiBxh(){
+  clearTimeout(bxhHen);
+  try { bxh = await rpc("bang_xep_hang"); veBuc($("bucVinhDanh"), bxh); veTomBxh(); } catch(e){ $("bxhTom").textContent = "Chưa tải được bảng xếp hạng."; }
+  bxhHen = setTimeout(() => { if (!$("mhChu").classList.contains("an") && !document.hidden) taiBxh(); else bxhHen = setTimeout(taiBxh, 30000); }, 120000);
+}
+function veBuc(el, d){
+  const top = (d.ds || []).filter(x => x.h).slice(0, 3), o = i => top[i];
+  const the = (x, h) => x ? `<div class="o h${h}"><div class="huy">${h}</div><div class="ten" title="${esc(x.ten)}">${esc(x.ten)}</div><div class="so">${so(x.tg)} người · ${so(x.dung)} câu đúng</div><div class="be">${h}</div></div>`
+    : `<div class="o h${h} rong"><div class="huy">${h}</div><div class="ten" style="color:#B4A898">Chưa có</div><div class="so">&nbsp;</div><div class="be" style="background:#EFE8E0">${h}</div></div>`;
+  el.innerHTML = the(o(1), 2) + the(o(0), 1) + the(o(2), 3);
+}
+function veTomBxh(){
+  $("bxhTom").innerHTML = `<b>${so(bxh.tong_nguoi)}</b> người · <b>${bxh.so_dang_bo_co}</b>/${(bxh.ds||[]).length} đảng bộ đã tham gia${bxh.thu_nghiem ? " (số liệu chạy thử)" : ""}`;
+  const d = new Date(bxh.cap_nhat); $("bxhCapNhat").textContent = `Cập nhật ${p2(d.getHours())}:${p2(d.getMinutes())}`;
+}
+function bangDayDu(d, tim){
+  const k = boDau(tim || "");
+  const ds = (d.ds || []).filter(x => !k || boDau(x.ten).includes(k));
+  return `<table><thead><tr><th style="width:60px">Hạng</th><th>Đảng bộ</th><th class="so">Người tham gia</th><th class="so an-dt">Số câu đúng</th><th class="so an-dt">Số đạt</th></tr></thead><tbody>` +
+    (ds.length ? ds.map(x => `<tr class="${x.h && x.h <= 3 ? "t" + x.h : ""}"><td>${x.h ? `<span class="hang">${x.h}</span>` : '<span class="mo-chu">–</span>'}</td><td>${esc(x.ten)}</td>
+      <td class="so">${x.tg ? so(x.tg) : '<span class="mo-chu">0</span>'}</td><td class="so an-dt">${so(x.dung)}</td><td class="so an-dt">${so(x.dat)}</td></tr>`).join("")
+      : '<tr><td colspan="5" style="color:var(--phu)">Không tìm thấy.</td></tr>') + "</tbody></table>";
+}
+async function moBxh(){
+  const m = hop(`<div class="bxh-dau"><div><h3>🏆 Bảng xếp hạng các đảng bộ</h3><small>Xếp theo số người tham gia, sau đó đến tổng số câu trả lời đúng</small></div><button class="dong" aria-label="Đóng">×</button></div>
+    <div class="bxh-than"><div class="buc" id="bucHop"></div>
+      <div class="bxh-loc"><input class="o" id="timBxh" placeholder="Tìm đảng bộ…"><span style="font-size:13px;color:var(--phu)" id="bxhHopTom"></span></div>
+      <div id="bangBxh"><span class="quay dam"></span></div></div>`, true);
+  m.querySelector(".dong").onclick = () => m.remove();
+  try { bxh = await rpc("bang_xep_hang"); } catch(e){ m.querySelector("#bangBxh").textContent = e.message; return; }
+  veBuc(m.querySelector("#bucHop"), bxh);
+  const d = new Date(bxh.cap_nhat);
+  m.querySelector("#bxhHopTom").textContent = `${so(bxh.tong_nguoi)} người · ${bxh.so_dang_bo_co} đảng bộ · cập nhật ${p2(d.getHours())}:${p2(d.getMinutes())}${bxh.thu_nghiem ? " · số liệu chạy thử" : ""}`;
+  const ve = () => m.querySelector("#bangBxh").innerHTML = bangDayDu(bxh, m.querySelector("#timBxh").value);
+  m.querySelector("#timBxh").oninput = ve; ve();
+}
+$("nutXemBxh").onclick = moBxh; $("nutBxhDau").onclick = moBxh; $("nutXemBxh2").onclick = moBxh;
+
+// màn hình trình chiếu (TV): index.html#bang-xep-hang — tự làm mới 2 phút/lần
+async function moTV(){
+  hien("mhTV"); document.querySelector(".dau").classList.add("an");
+  const ve = async () => {
+    try { bxh = await rpc("bang_xep_hang"); } catch(e){ return; }
+    const d = new Date(bxh.cap_nhat);
+    $("mhTV").innerHTML = `<div style="display:flex;align-items:center;gap:16px;margin-bottom:18px"><img src="assets/logo-tuyen-giao-160.png" alt="" style="width:72px;height:72px">
+      <div><div style="color:var(--do);font-weight:800;letter-spacing:.05em;text-transform:uppercase">Ban Tuyên giáo Tỉnh ủy Tuyên Quang</div>
+      <div style="font-size:30px;font-weight:900;line-height:1.2">Bảng xếp hạng tham gia đánh giá nhận thức</div></div>
+      <div style="margin-left:auto;text-align:right"><div style="font-size:34px;font-weight:900;color:var(--do)">${so(bxh.tong_nguoi)}</div><div style="color:var(--phu);font-size:16px">người tham gia · cập nhật ${p2(d.getHours())}:${p2(d.getMinutes())}</div></div></div>
+      <div class="buc" style="max-width:900px;margin:0 auto 18px" id="bucTV"></div><div style="background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--vien)">${bangDayDu(bxh)}</div>`;
+    veBuc($("bucTV"), bxh);
+  };
+  await ve(); setInterval(ve, 120000);
+}
+
+/* ---------- mã QR ---------- */
+$("nutQR").onclick = async () => {
+  const link = location.href.split("#")[0];
+  const m = hop(`<div id="qrHop" style="text-align:center"><h3>Mã QR trang đánh giá</h3><p style="margin-bottom:6px">Quét bằng camera điện thoại hoặc Zalo để mở trang.</p><div id="qrVe"><span class="quay dam"></span></div>
+    <p style="font-size:13px;word-break:break-all;margin:0 0 14px">${esc(link)}</p>
+    <div class="nhom-nut"><button class="nut nut-phu" data-dong>Đóng</button><button class="nut nut-chinh" id="qrTai">Tải ảnh QR</button></div></div>`);
+  m.querySelector("[data-dong]").onclick = () => m.remove();
+  try {
+    if (!window.QRCode) await new Promise((ok, loi) => { const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"; s.onload = ok; s.onerror = loi; document.head.appendChild(s); });
+    const ve = m.querySelector("#qrVe"); ve.innerHTML = "";
+    new QRCode(ve, { text: link, width: 480, height: 480, colorDark: "#0D1B2A", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+    m.querySelector("#qrTai").onclick = () => { const c = ve.querySelector("canvas"); if (!c) return; const a = document.createElement("a"); a.href = c.toDataURL("image/png"); a.download = "QR-danh-gia-nhan-thuc.png"; a.click(); };
+  } catch(e){ m.querySelector("#qrVe").textContent = "Không tải được công cụ tạo mã QR. Đồng chí kiểm tra mạng."; }
 };
 
 window.addEventListener("beforeunload", e => { if (bai && !bai.ketQua && !$("mhLamBai").classList.contains("an")){ e.preventDefault(); e.returnValue = ""; } });
