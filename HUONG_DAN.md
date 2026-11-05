@@ -1,103 +1,84 @@
 # Phần mềm Đánh giá nhận thức sau học tập Nghị quyết Hội nghị Trung ương 4 khóa XIV
 
-Tỉnh ủy Tuyên Quang. Chạy trên GitHub Pages và Supabase (bản miễn phí).
+Ban Tuyên giáo Tỉnh ủy Tuyên Quang. Chạy trên GitHub Pages và Supabase (gói Pro, máy chủ Small). **Phiên bản 3.1.**
 
 ## Cấu trúc thư mục
 
 | File | Dùng để |
 |---|---|
-| `index.html` | Trang làm bài cho cán bộ, đảng viên (gửi link này đi) |
-| `admin.html` | Trang quản trị: tổng hợp, danh sách, câu hỏi, đảng bộ, cài đặt, xuất Excel |
-| `config.js` | Địa chỉ và khóa Supabase (**chỉ cần sửa file này**) |
-| `assets/logo.png` | Logo búa liềm |
-| `supabase/khoi_tao.sql` | Tạo CSDL, nạp sẵn 130 đảng bộ và 31 câu hỏi |
-| `tools/thu_tai.mjs` | Script giả lập nhiều người thi cùng lúc |
+| `index.html` | Trang làm bài, kèm bảng xếp hạng (gửi link này đi) |
+| `index.html#bang-xep-hang` | Trang Bảng xếp hạng (toàn bộ đảng bộ, bấm vào để xem từng cá nhân) |
+| `index.html#trinh-chieu` | Màn hình trình chiếu bảng xếp hạng (TV, máy chiếu), tự làm mới 2 phút/lần |
+| `admin.html` | Trang quản trị |
+| `config.js` | Kết nối Supabase (đã điền sẵn) |
+| `assets/` | Logo ngành Tuyên giáo, hoa văn trống đồng, hình nền Cột cờ Lũng Cú – Cây đa Tân Trào |
+| `supabase/khoi_tao.sql` | Tạo và nâng cấp CSDL |
+| `tools/CHAY_THU_TAI.bat` | Bấm đúp để thử tải |
 
-## Các bước triển khai
+## CẬP NHẬT PHIÊN BẢN 3.1 (05/11/2026)
 
-### Bước 1. Tạo dự án Supabase riêng
-1. Vào https://supabase.com/dashboard, bấm **New project**, đặt tên ví dụ `danhgia-nq4`, Region chọn **Southeast Asia (Singapore)**.
-2. Nên tạo dự án mới, không dùng chung với các app khác của Ban, để lúc cao điểm không ảnh hưởng nhau.
+Dành cho máy đã nâng cấp lên phiên bản 3. **Không xóa dữ liệu nào.**
 
-### Bước 2. Tạo CSDL
-1. Vào **SQL Editor**, bấm **New query**.
-2. Mở file `supabase/khoi_tao.sql`, chép toàn bộ nội dung, dán vào rồi bấm **Run**. Thấy *Success* là xong.
-3. File chạy lại nhiều lần cũng không mất dữ liệu.
+1. Supabase > **SQL Editor > New query**: dán toàn bộ file `supabase/khoi_tao.sql` mới, bấm **Run** (chạy lại an toàn, chỉ thêm bảng đếm lượt truy cập và 2 hàm mới).
+2. Lên GitHub, tải lên **thay thế** `index.html`, `admin.html` và thêm file mới `assets/trong-dong.webp`. File `config.js` giữ nguyên.
+3. Mở trang, bấm Ctrl+F5.
 
-### Bước 3. Tạo tài khoản quản trị
-1. Vào **Authentication > Users > Add user > Create new user**, nhập email `ngacvantuan.hg@gmail.com` và mật khẩu, tích **Auto Confirm User**.
-2. Email này đã được cấp quyền quản trị sẵn trong file SQL. Muốn thêm người quản trị khác: tạo user như trên, rồi chạy trong SQL Editor:
-   ```sql
-   insert into quan_tri (email) values ('email_nguoi_khac@...');
-   ```
-3. Nên tắt đăng ký tự do: **Authentication > Sign In / Providers > Email**, bỏ chọn **Allow new users to sign up**.
+Thay đổi:
+- Thanh trên cùng có 2 tab **Trang chủ** và **Bảng xếp hạng**.
+- Trang chủ có khối **Thống kê** (lượt truy cập, số người tham gia, số đơn vị kết nối, bài đã nộp, tỷ lệ đạt) và khối **Xếp hạng tham gia** (10 đơn vị đông người tham gia nhất).
+- Trang **Bảng xếp hạng**: vinh danh 3 đơn vị dẫn đầu, bảng đủ 130 đảng bộ (lọc theo nhóm, tìm kiếm). Bấm vào đảng bộ để xem danh sách cá nhân xếp theo số câu đúng (bằng nhau thì ai làm nhanh hơn xếp trên). Muốn ẩn danh sách cá nhân thì bỏ chọn ô **"Công khai danh sách cá nhân"** trong Cài đặt.
+- Danh mục tài liệu thu gọn, bấm để sổ xuống; ghi theo thể thức "Nghị quyết số 31-NQ/TW, ngày 15/10/2026 của…".
+- Màn hình trình chiếu chuyển sang địa chỉ `index.html#trinh-chieu`.
+- **Lượt truy cập** tính mỗi phiên trình duyệt một lần. Khi bấm **Xóa toàn bộ dữ liệu thử nghiệm**, lượt truy cập cũng được đếm lại từ 0.
 
-### Bước 4. Điền cấu hình
-Vào **Project Settings > API** (hoặc **API Keys**), chép **Project URL** và khóa **anon public** (hoặc **publishable**) vào `config.js`:
-```js
-window.CAU_HINH = {
-  SUPABASE_URL: "https://abcdxyz.supabase.co",
-  SUPABASE_KEY: "eyJhbGciOi..."
-};
-```
-Tuyệt đối không dùng khóa `service_role` hoặc `secret`.
+## NÂNG CẤP LÊN PHIÊN BẢN 3 (làm một lần, trước 08:00 ngày 09/11)
 
-### Bước 5. Đưa lên GitHub Pages
-1. Tạo repository mới trên GitHub (ví dụ `danhgia-nq4`), tải toàn bộ thư mục lên. Riêng thư mục `tools` và `supabase` không bắt buộc.
-2. Vào **Settings > Pages**, phần *Source* chọn **Deploy from a branch**, nhánh `main`, thư mục `/ (root)`, bấm **Save**.
-3. Sau 1–2 phút có địa chỉ:
-   - Trang thi: `https://<tên-tài-khoản>.github.io/danhgia-nq4/`
-   - Trang quản trị: `https://<tên-tài-khoản>.github.io/danhgia-nq4/admin.html`
+1. Supabase > **SQL Editor > New query**: dán toàn bộ file `supabase/khoi_tao.sql`, bấm **Run**. Thấy dòng *"Đã nâng cấp dữ liệu lên phiên bản 3"* là xong. Lần chạy đầu tiên này sẽ:
+   - thay toàn bộ câu hỏi bằng **bộ 65 câu** thuộc 6 chuyên đề;
+   - đặt lại cài đặt: Ban Tuyên giáo Tỉnh ủy Tuyên Quang; 120 phút; đạt từ 70% (46/65 câu); tối đa 3 lần, lấy kết quả cao nhất; không đảo câu hỏi, đáp án; chạy thử **ngay từ lúc nâng cấp**; chính thức **08:00 ngày 09/11 đến 22:00 ngày 15/11/2026**;
+   - nạp danh mục 6 tài liệu;
+   - **xóa toàn bộ bài thi cũ** (đều là dữ liệu thử).
 
-## Thời gian đã cài sẵn (sửa được trong trang quản trị > Cài đặt)
+   Danh sách 130 đảng bộ và tài khoản quản trị giữ nguyên. Các lần chạy lại về sau **không xóa, không ghi đè gì**.
+2. Lên GitHub, xóa file cũ `assets/logo.png`, rồi tải lên **thay thế** các file: `index.html`, `admin.html`, toàn bộ thư mục `assets/` (các file logo `logo-tuyen-giao-…` và `nen-tuyen-quang.svg`). File `config.js` giữ nguyên.
+3. Mở trang thi, bấm Ctrl+F5. Thấy logo Tuyên giáo, nhãn "Đang chạy thử" và 65 câu là đúng.
 
-| Mốc | Thời gian | Trang thi |
-|---|---|---|
-| Trước khi chạy thử | trước 08:00 ngày 04/11/2026 | Báo "chưa bắt đầu" |
-| Chạy thử | 08:00 ngày 04/11 đến 08:00 ngày 05/11 | Làm bài được, kết quả gắn nhãn **thử nghiệm** |
-| Chính thức | 08:00 ngày 05/11 đến 17:00 ngày 15/11 | Làm bài, tính kết quả |
-| Kết thúc | sau 17:00 ngày 15/11 | Báo "đã kết thúc" |
+## Bảng xếp hạng
 
-Trang tự mở và tự đóng theo các mốc này. Người bắt đầu làm bài trước giờ kết thúc vẫn được làm đủ 45 phút và nộp bình thường.
+- **Cách xếp:** theo **số người tham gia** của đảng bộ (mỗi người chỉ tính một lần), cùng số người thì so **tổng số câu trả lời đúng** (kết quả cao nhất của mỗi người).
+- **Hiển thị ở 4 chỗ:**
+  1. **Trang chủ**: 10 đơn vị dẫn đầu; nút "Xem toàn bộ danh sách đơn vị" mở tab **Bảng xếp hạng** (đủ 130 đảng bộ, bấm vào từng đảng bộ để xem cá nhân).
+  2. **Màn hình kết quả**: báo cho người vừa thi biết đảng bộ của mình đang xếp thứ mấy.
+  3. **Màn hình trình chiếu** `…/index.html#trinh-chieu`: chữ to, tự làm mới, dùng cho giao ban hoặc màn hình tại hội trường.
+  4. **Trang quản trị** và **file Excel** (sheet "Xếp hạng", có bình quân câu đúng/người và tỷ lệ đạt).
+- Số liệu tự cập nhật **2 phút một lần**, nên dù đông người xem cũng không làm nặng máy chủ.
+- Danh sách cá nhân (họ tên, chức vụ, đơn vị, số câu đúng, đạt/chưa đạt) chỉ hiện khi bật "Công khai danh sách cá nhân" trong Cài đặt (mặc định bật).
+- Trong thời gian chạy thử, bảng hiện số liệu thử và có ghi chú "số liệu chạy thử".
 
 ## Cách phần mềm hoạt động
 
-- **Đáp án không bao giờ gửi xuống điện thoại người thi.** Máy chủ chấm điểm. Người thi không đọc được bảng nào, chỉ gọi được 3 hàm: xem thông tin đợt, bắt đầu làm bài, nộp bài.
-- **Mỗi người chỉ có 2 lần ghi vào CSDL:** lúc bắt đầu và lúc nộp. Vì thế bản Supabase miễn phí chịu được 10.000–20.000 người thi rải trong 11 ngày.
-- **Bài đang làm được lưu ngay trên điện thoại.** Lỡ tắt trình duyệt hay mất mạng, mở lại trang là làm tiếp, đồng hồ vẫn chạy theo giờ máy chủ.
-- **Nộp bài tự thử lại** tối đa 6 lần nếu mạng chập chờn. Nộp trùng không bị tính hai lần.
-- **Hết 45 phút** thì tự nộp, câu chưa làm tính là sai.
-- **Thi lại:** mặc định cho phép. Tổng hợp lấy **lần có điểm cao nhất** của mỗi người (cùng một người = trùng họ tên + đảng bộ + đơn vị công tác). Có thể tắt ở trang Cài đặt.
-- **Đảo thứ tự câu hỏi** cho từng người, giữ nguyên thứ tự phương án A/B/C (vì có câu "Cả A và B").
-- **Đạt yêu cầu:** đúng từ 70% số câu trở lên, tức 21/30 câu. Sửa được ở trang Cài đặt.
+- Câu hỏi hiện **theo từng chuyên đề** (6 văn bản), **giữ nguyên thứ tự câu hỏi và phương án A/B/C** như trong bộ đề (câu 1 đến câu 65). Muốn đảo thứ tự câu thì bật ô "Đảo thứ tự câu hỏi" trong Cài đặt.
+- Trên máy tính, danh sách câu hỏi nằm bên phải, chia theo chuyên đề. Trên điện thoại, mỗi màn một câu, danh sách câu nằm phía dưới. Trên máy tính có thể dùng phím ← → để chuyển câu, phím A/B/C để chọn đáp án.
+- **Đáp án chỉ nằm trên máy chủ**, máy chủ chấm điểm.
+- **Tối đa 3 lần làm bài.** Tổng hợp lấy kết quả cao nhất. Cùng một người được nhận diện bằng họ tên + đảng bộ + đơn vị.
+- **Bài đang làm được lưu trên máy.** Mất mạng thì có dấu báo "Mất mạng – bài vẫn được lưu". Lúc nộp bài tự thử lại khi mạng chập chờn. Còn 10 phút và 5 phút thì có nhắc nhở, hết 120 phút thì tự nộp.
+- Nút **Mã QR trang** tạo mã QR để in hoặc gửi cho các chi bộ quét.
 
 ## Trang quản trị
 
-- **Tổng hợp:** số người tham gia, đạt, không đạt, mỗi mục tách lãnh đạo và không lãnh đạo, theo từng đảng bộ (6 đảng ủy trực thuộc và 124 xã, phường). Có nút chuyển giữa dữ liệu *Chính thức* và *Thử nghiệm*.
-- **Xuất Excel** gồm 3 sheet: *Tổng hợp* theo đảng bộ, *Danh sách* từng người, *Theo câu hỏi* (tỷ lệ trả lời đúng từng câu). Font Times New Roman, khổ A4 ngang.
-- **Câu hỏi:** thêm, sửa, xóa, bật/tắt. Câu nào đang bật mới vào đề. Sửa đáp án khi đã có người thi thì phần mềm hỏi có **chấm lại toàn bộ** không.
-- **Đảng bộ:** sửa tên, thêm, ẩn khỏi danh sách chọn.
-- **Cài đặt:** thời gian, tỷ lệ đạt, thông báo trên trang thi, **tạm dừng khẩn cấp**, xóa dữ liệu thử nghiệm.
+- **Tổng hợp:** số tham gia, đạt, không đạt theo 130 đảng bộ (tách lãnh đạo, không lãnh đạo), kèm bảng xếp hạng.
+- **Câu hỏi:** thêm, sửa, bật/tắt câu hỏi; xem tỷ lệ trả lời đúng; chấm lại khi sửa đáp án. Muốn thêm câu vào một chuyên đề thì ô "Chuyên đề" phải gõ **đúng tên** chuyên đề đó (có sẵn danh sách gợi ý).
+- **Cài đặt:** thời gian, tỷ lệ đạt, số lần, mốc giờ, **danh mục tài liệu** (mỗi dòng một văn bản, dạng `Tên ngắn | Tên đầy đủ`), tạm dừng khẩn cấp, xóa dữ liệu thử.
+- **Xuất Excel:** gồm các sheet Tổng hợp, Xếp hạng, Theo câu hỏi, và tùy chọn kèm Danh sách.
 
-## Việc cần làm trước ngày 04/11
+## Trước ngày thi
 
-1. **Phòng chuyên môn xác nhận các điểm trong bộ câu hỏi** (đã ghi chú ⚠ ngay trên từng câu trong trang quản trị):
-   - Câu 18: file gốc không có đáp án, đang tạm để **C** ("Cả A và B").
-   - Câu 30: file gốc không có đáp án, đang tạm để **B** ("Theo dự toán điều chỉnh").
-   - File gốc có **31 câu** (một câu đánh số nhầm "Câu 6" nằm giữa câu 28 và 29). Câu này đang **tắt** để đề đủ 30 câu.
-   - Ngưỡng đạt: file yêu cầu ghi 21/30 (70%), file câu hỏi ghi 20/30. Phần mềm đang để **21/30**.
-   - Câu 21: đã sửa "đảm niệm" thành "đảm nhiệm".
-2. **Chạy thử ngay bây giờ** (không cần đợi 04/11): vào Cài đặt, đặt *Bắt đầu chạy thử* về giờ hiện tại rồi bấm Lưu. Mở trang thi trên vài điện thoại thật (Android, iPhone, cả Zalo) để làm thử.
-3. **Thử tải** (cần Node.js 18 trở lên), trong lúc đang ở chế độ thử nghiệm:
-   ```
-   cd tools
-   node thu_tai.mjs --url https://abcdxyz.supabase.co --key <anon key> --so 2000 --dong-thoi 100
-   ```
-   Nếu 95% lượt nộp dưới khoảng 1–2 giây và không có lỗi là ổn.
-4. Thử xong: Cài đặt > **Xóa toàn bộ dữ liệu thử nghiệm**, rồi đặt lại *Bắt đầu chạy thử* là 08:00 ngày 04/11.
+1. Nâng cấp như mục trên, rồi làm thử trên điện thoại thật (Android, iPhone, mở link trong Zalo) và trên máy tính.
+2. Chạy `tools/CHAY_THU_TAI.bat` một lượt.
+3. Xong: vào Cài đặt > **Xóa toàn bộ dữ liệu thử nghiệm**. Mốc chính thức 08:00 ngày 09/11 đã được cài sẵn.
 
 ## Trong thời gian thi
 
-- **Mỗi ngày xuất Excel một lần** để lưu bản sao (bản free của Supabase không có sao lưu tự động).
-- Gặp sự cố, bật **Tạm dừng khẩn cấp** trong Cài đặt: trang thi khóa ngay, người đang làm dở vẫn nộp được bài.
-- Supabase bản free tự tạm dừng dự án nếu **7 ngày** không có truy cập. Trong thời gian thi không lo việc này, nhưng nếu dựng xong mà để lâu mới thi thì vào trang quản trị một lần trước ngày thi.
+- Mỗi ngày xuất Excel một lần để lưu. Gói Pro còn có sao lưu tự động hằng ngày.
+- Gặp sự cố: bật **Tạm dừng khẩn cấp** trong Cài đặt. Không bấm Pause hay Restart trong Supabase, và không đổi cấp máy chủ.
+- Sau 22:00 ngày 15/11: xuất Excel lưu trữ. Chu kỳ tính phí Supabase kết thúc ngày 30/11. Nếu không dùng tiếp, hạ máy chủ về Micro rồi hạ gói về Free trước ngày đó.

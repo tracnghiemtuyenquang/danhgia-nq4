@@ -235,6 +235,7 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
         </div>
         <div class="hang" style="margin:6px 0 14px;gap:22px">
           <label style="display:flex;gap:6px"><input type="checkbox" name="dao_cau_hoi"> Đảo thứ tự câu hỏi cho mỗi người</label>
+          <label style="display:flex;gap:6px"><input type="checkbox" name="cong_khai_ca_nhan"> Công khai danh sách cá nhân (họ tên, chức vụ, số câu đúng) trên trang Bảng xếp hạng</label>
           <label style="display:flex;gap:6px;color:var(--loi);font-weight:600"><input type="checkbox" name="tam_dung"> Tạm dừng khẩn cấp (khóa trang thi)</label>
         </div>
         <button class="nut nut-chinh">Lưu cài đặt</button>
@@ -574,6 +575,7 @@ function veCaiDat(tq){
   ["ten_dot","don_vi_to_chuc","thoi_gian_lam_bai","ty_le_dat","thong_bao"].forEach(k => f.elements[k].value = cauHinh[k] ?? "");
   ["thu_nghiem_tu","mo_tu","dong_luc"].forEach(k => f.elements[k].value = sangO(cauHinh[k]));
   ["dao_cau_hoi","tam_dung"].forEach(k => f.elements[k].checked = !!cauHinh[k]);
+  f.elements.cong_khai_ca_nhan.checked = cauHinh.cong_khai_ca_nhan !== false;
   f.elements.so_lan_toi_da.value = cauHinh.so_lan_toi_da ?? 2;
   f.elements.tai_lieu.value = (cauHinh.tai_lieu || []).map(t => t.mo_ta && t.mo_ta !== t.ten ? `${t.ten} | ${t.mo_ta}` : t.ten).join("\n");
   goiYDat(); cauHinh._so_thu = tq.so_thu_nghiem; $("demThu").textContent = `Hiện có ${so(tq.so_thu_nghiem)} lượt thi thử nghiệm.`;
@@ -585,7 +587,7 @@ $("formCD").addEventListener("submit", async e => {
   e.preventDefault(); const f = e.target.elements;
   const row = { ten_dot: f.ten_dot.value.trim(), don_vi_to_chuc: f.don_vi_to_chuc.value.trim(), thoi_gian_lam_bai: +f.thoi_gian_lam_bai.value,
     ty_le_dat: +f.ty_le_dat.value, thong_bao: f.thong_bao.value.trim() || null, thu_nghiem_tu: tuO(f.thu_nghiem_tu.value), mo_tu: tuO(f.mo_tu.value),
-    dong_luc: tuO(f.dong_luc.value), dao_cau_hoi: f.dao_cau_hoi.checked, so_lan_toi_da: +f.so_lan_toi_da.value, tam_dung: f.tam_dung.checked,
+    dong_luc: tuO(f.dong_luc.value), dao_cau_hoi: f.dao_cau_hoi.checked, cong_khai_ca_nhan: f.cong_khai_ca_nhan.checked, so_lan_toi_da: +f.so_lan_toi_da.value, tam_dung: f.tam_dung.checked,
     tai_lieu: f.tai_lieu.value.split("\n").map(d => d.trim()).filter(Boolean).map(d => { const [ten, ...mt] = d.split("|"); return { ten: ten.trim(), mo_ta: (mt.join("|").trim() || ten.trim()) }; }), cap_nhat_luc: new Date().toISOString() };
   if (row.mo_tu && row.dong_luc && new Date(row.mo_tu) >= new Date(row.dong_luc)) return toast("Thời gian kết thúc phải sau thời gian bắt đầu.", true);
   if (row.thu_nghiem_tu && row.mo_tu && new Date(row.thu_nghiem_tu) > new Date(row.mo_tu)) return toast("Thời gian chạy thử phải trước thời gian bắt đầu chính thức.", true);
