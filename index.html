@@ -549,6 +549,7 @@ tr.t1 td,tr.t2 td,tr.t3 td{font-weight:700}
     <h2 id="nopTieuDe" style="margin:14px 0 6px">Đang nộp bài…</h2>
     <p id="nopNoiDung" style="color:var(--phu);margin:0">Đồng chí vui lòng không tắt trang.</p>
     <button class="nut nut-chinh an" id="nutNopLai" style="margin-top:14px">Nộp lại</button>
+    <button class="nut nut-phu an" id="nutBoBai" style="margin-top:14px">Về trang chủ</button>
   </div>
 </section>
 <section id="mhKetQua" class="an ket-qua">
@@ -833,7 +834,7 @@ async function xacNhanNop(){
 /* ---------- nộp bài: tự thử lại khi lỗi mạng ---------- */
 async function nop(){
   if (dangNop) return; dangNop = true; clearInterval(timer);
-  hien("mhDangNop"); $("nutNopLai").classList.add("an"); $("nopQuay").classList.remove("an");
+  hien("mhDangNop"); $("nutNopLai").classList.add("an"); $("nutBoBai").classList.add("an"); $("nopQuay").classList.remove("an");
   $("nopTieuDe").textContent = "Đang nộp bài…"; $("nopNoiDung").textContent = "Đồng chí vui lòng không tắt trang.";
   const cho = [0, 2000, 4000, 7000, 12000, 20000];
   for (let lan = 0; lan < cho.length; lan++){
@@ -843,7 +844,10 @@ async function nop(){
       bai.ketQua = kq; luu(KHOA_LUU, bai); dangNop = false; hienKetQua(bai); return;
     } catch(e){
       if (!e.mang){ $("nopTieuDe").textContent = "Không nộp được bài"; $("nopNoiDung").textContent = e.message; $("nopQuay").classList.add("an");
-        $("nutNopLai").classList.remove("an"); dangNop = false; return; }
+        // bài không còn trên máy chủ, hoặc đã đủ số lần: bỏ bài hỏng khỏi máy để không bị kẹt khi mở lại trang
+        if (["KHONG_THAY","DA_THI"].includes(e.ma)){ xoa(KHOA_LUU); bai = null; $("nutBoBai").classList.remove("an"); }
+        else $("nutNopLai").classList.remove("an");
+        dangNop = false; return; }
     }
   }
   dangNop = false; $("nopQuay").classList.add("an");
@@ -852,6 +856,7 @@ async function nop(){
   $("nutNopLai").classList.remove("an");
 }
 $("nutNopLai").onclick = nop;
+$("nutBoBai").onclick = () => { xoa(KHOA_LUU); bai = null; diToiTrang(""); };
 
 /* ---------- kết quả ---------- */
 function hienKetQua(b){
