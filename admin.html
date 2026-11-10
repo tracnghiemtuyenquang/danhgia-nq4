@@ -187,6 +187,7 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
     <div id="dsTab" class="an">
       <div class="the">
         <div class="hang" style="margin-bottom:10px">
+          <button class="nut nut-vang" id="nutRaSoat" title="Tìm người ghi đơn vị ở một xã, phường nhưng chọn đảng bộ khác">🔍 Rà soát chọn nhầm đảng bộ</button>
           <input class="o" id="dsTim" placeholder="Tìm họ tên, chức vụ, đơn vị…" style="flex:1;min-width:200px">
           <select class="o" id="dsDB" style="max-width:260px"><option value="">Tất cả đảng bộ</option></select>
           <select class="o" id="dsKQ"><option value="">Tất cả kết quả</option><option value="dat">Đạt</option><option value="khong_dat">Không đạt</option></select>
@@ -526,6 +527,60 @@ function moChuyenDB(khoa, ten, dbCu){
       m.remove(); toast(r.gop ? `Đã chuyển sang ${tenMoi} và gộp với bản ghi có sẵn ở đó (tổng ${r.so_lan} lượt, lấy kết quả cao nhất).` : `Đã chuyển sang ${tenMoi}.`);
       taiDanhSach(); }
     catch(err){ nut.disabled = false; toast(loiMsg(err), true); }
+  };
+}
+
+// Rà soát hàng loạt người chọn nhầm đảng bộ (dựa vào tên xã, phường ghi trong ô Đơn vị công tác)
+const CAN_XEM = /(điện lực|dien luc|công ty|cong ty|ngân hàng|ngan hang|bưu điện|buu dien|kho bạc|kho bac|chi cục|chi cuc|bệnh viện|benh vien|thpt|thuế|thue|bảo hiểm|bao hiem|viettel|vnpt|phân xưởng|phan xuong|nhà máy|nha may|thủy điện|thuy dien|hạt kiểm lâm|kiem lam)/i;
+$("nutRaSoat").onclick = async () => {
+  const dsDB = thongKe.filter(r => r.tham_gia_tt > 0), tt = tienTrinh("Đang rà soát người có thể chọn nhầm đảng bộ");
+  let ds;
+  try { ds = (await chayLanLuot(dsDB, r => goi("qt_ra_soat_nham", { p_thu_nghiem: thuNghiem, p_dang_bo: r.dang_bo_id }), 4,
+          (d, n) => tt.cap(d, n, `Đã rà ${d}/${n} đảng bộ`))).flat(); }
+  catch(e){ tt.dong(); toast(/qt_ra_soat_nham/.test(loiMsg(e)) ? "Chưa chạy file bo_sung_ra_soat_nham.sql trên Supabase." : "Lỗi rà soát: " + loiMsg(e), true); return; }
+  tt.dong();
+  ds.sort((a, b) => a.goi_y.localeCompare(b.goi_y, "vi") || a.ho_ten.localeCompare(b.ho_ten, "vi"));
+  ds.forEach(r => { r._xem = CAN_XEM.test(r.don_vi) || CAN_XEM.test(r.chuc_vu); r._chon = !r._xem; });
+  moRaSoat(ds);
+};
+function moRaSoat(ds){
+  const m = hop(`<div class="hang" style="margin-bottom:6px"><h3 style="margin:0">Rà soát chọn nhầm đảng bộ</h3><span class="gian"></span><button class="nut" data-dong>Đóng</button></div>
+    <p style="color:var(--phu);margin:0 0 10px;font-size:13.5px">Những người dưới đây ghi ở ô <b>Đơn vị công tác</b> tên một xã, phường khác với đảng bộ đã chọn. Bỏ tick những người không cần chuyển rồi bấm <b>Chuyển</b>.
+      Dòng nền vàng là đơn vị dạng doanh nghiệp, ngành dọc (điện lực, ngân hàng, THPT…) có thể đúng đảng bộ, nên mặc định <b>không</b> tick.</p>
+    <div class="hang" style="margin-bottom:8px"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="rsTatCa"> Chọn tất cả</label>
+      <input class="o" id="rsTim" placeholder="Lọc theo tên, đơn vị, đảng bộ…" style="flex:1;min-width:180px"><span id="rsDem" style="color:var(--phu);font-size:13px"></span>
+      <button class="nut nut-chinh" id="rsChuyen">Chuyển</button></div>
+    <div class="bang-wrap" style="max-height:60vh"><table id="rsBang"></table></div>`);
+  m.querySelector(".hop").style.maxWidth = "1150px"; m.querySelector(".hop").style.width = "96vw"; m.onmousedown = null;
+  const ve = () => {
+    const k = boDau(m.querySelector("#rsTim").value.trim()), hien = ds.filter(r => !k || boDau(r.ho_ten + " " + r.don_vi + " " + r.da_chon + " " + r.goi_y).includes(k));
+    m.querySelector("#rsBang").innerHTML = `<thead><tr><th></th><th>Họ và tên</th><th>Đơn vị công tác</th><th>Đã chọn</th><th></th><th>Chuyển sang</th><th class="so">Câu đúng</th></tr></thead><tbody>` +
+      (hien.length ? hien.map(r => `<tr${r._xem ? ' style="background:#FFF8E1"' : ""}><td><input type="checkbox" data-k="${r.khoa}" ${r._chon ? "checked" : ""}></td>
+        <td><b>${esc(r.ho_ten)}</b><br><small style="color:var(--phu)">${esc(r.chuc_vu)}</small></td><td>${esc(r.don_vi)}</td>
+        <td style="color:var(--phu)">${esc(r.da_chon)}</td><td>→</td><td><b>${esc(r.goi_y)}</b></td><td class="so">${r.so_cau_dung}</td></tr>`).join("")
+        : `<tr><td colspan="7" style="text-align:center;color:var(--phu);padding:20px">${ds.length ? "Không có dòng nào khớp bộ lọc." : "Không phát hiện trường hợp nào chọn nhầm. 👍"}</td></tr>`) + "</tbody>";
+    const n = ds.filter(r => r._chon).length;
+    m.querySelector("#rsDem").textContent = `${so(ds.length)} trường hợp · đã chọn ${so(n)}`;
+    m.querySelector("#rsChuyen").textContent = `Chuyển ${so(n)} người`; m.querySelector("#rsChuyen").disabled = !n;
+    m.querySelector("#rsTatCa").checked = hien.length > 0 && hien.every(r => r._chon);
+  };
+  ve();
+  m.querySelector("[data-dong]").onclick = () => m.remove();
+  m.querySelector("#rsTim").oninput = ve;
+  m.querySelector("#rsTatCa").onchange = e => { const k = boDau(m.querySelector("#rsTim").value.trim());
+    ds.forEach(r => { if (!k || boDau(r.ho_ten + " " + r.don_vi + " " + r.da_chon + " " + r.goi_y).includes(k)) r._chon = e.target.checked; }); ve(); };
+  m.querySelector("#rsBang").addEventListener("change", e => { const c = e.target.closest("[data-k]"); if (!c) return;
+    const r = ds.find(x => x.khoa === c.dataset.k); if (r){ r._chon = c.checked; ve(); } });
+  m.querySelector("#rsChuyen").onclick = async () => {
+    const chon = ds.filter(r => r._chon);
+    if (!await xacNhan("Chuyển đảng bộ hàng loạt?", `Chuyển <b>${so(chon.length)} người</b> sang đảng bộ gợi ý. Mọi lượt thi và kết quả cao nhất chuyển theo; người nào đã có bản ghi ở đảng bộ đúng thì được gộp lại.`, "Chuyển")) return;
+    const tt = tienTrinh("Đang chuyển đảng bộ"); let ok = 0; const loi = [];
+    await chayLanLuot(chon, async r => { try { await goi("qt_chuyen_dang_bo", { p_thu_nghiem: thuNghiem, p_khoa: r.khoa, p_dang_bo: r.goi_y_id }); ok++; r._xong = true; }
+      catch(e){ loi.push(`${r.ho_ten}: ${loiMsg(e)}`); } }, 4, (d, n) => tt.cap(d, n, `Đã chuyển ${d}/${n} người`));
+    tt.dong();
+    ds = ds.filter(r => !r._xong); ve();
+    toast(`Đã chuyển ${so(ok)} người.` + (loi.length ? ` ${loi.length} người không chuyển được: ${loi.slice(0, 3).join("; ")}${loi.length > 3 ? "…" : ""}` : ""), !!loi.length);
+    taiTatCa();
   };
 }
 

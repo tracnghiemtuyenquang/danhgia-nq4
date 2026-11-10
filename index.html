@@ -179,6 +179,9 @@ body.dang-thi .nen-tq{opacity:.07}
 .o:focus{border-color:var(--do);background:#fff;box-shadow:0 0 0 4px rgba(200,16,46,.10)}
 .o.sai{border-color:var(--loi);background:#FFF6F6}
 .chon-db{position:relative}
+.canh-db{margin-top:8px;background:#FFF8E1;border:1px solid #F2C94C;border-radius:10px;padding:9px 12px;font-size:14px;color:#6B4E00;line-height:1.45}
+.canh-db button{margin-top:6px;border:0;background:var(--do);color:#fff;font-weight:700;border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13.5px}
+.xn-db{display:block;margin-top:6px;font-size:17px;font-weight:800;color:var(--do)}
 .ds-db{position:absolute;left:0;right:0;top:calc(100% + 4px);background:#fff;border:1.5px solid #E7D9CC;border-radius:12px;max-height:300px;overflow:auto;z-index:20;box-shadow:0 14px 34px rgba(13,27,42,.16)}
 .ds-db .nhom{position:sticky;top:0;background:var(--vang-nhat);font-size:12px;font-weight:800;color:var(--do-dam);padding:6px 12px;text-transform:uppercase;letter-spacing:.04em}
 .ds-db button{display:block;width:100%;text-align:left;border:0;background:none;padding:11px 14px;border-bottom:1px solid #F5EEE6;cursor:pointer}
@@ -449,6 +452,7 @@ tr.t1 td,tr.t2 td,tr.t3 td{font-weight:700}
             <input class="o" id="timDangBo" placeholder="Gõ tên xã, phường, đảng bộ để tìm…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="dsDangBo">
             <div class="ds-db an" id="dsDangBo" role="listbox"></div>
           </div>
+          <div class="canh-db an" id="canhDB" role="alert"></div>
         </div>
         <div class="truong">
           <span class="nhan">Chức vụ lãnh đạo, quản lý <i>*</i></span>
@@ -701,7 +705,27 @@ function veDsDB(tu){
   box.innerHTML = n ? html : `<div class="rong">Không tìm thấy. Đồng chí thử gõ tên khác (không cần dấu).</div>`;
   box.classList.remove("an"); $("timDangBo").setAttribute("aria-expanded","true");
 }
-function chonDB(id){ dbChon = dsDB.find(d => d.id === id) || null; $("timDangBo").value = dbChon ? dbChon.ten : ""; $("dsDangBo").classList.add("an"); $("timDangBo").setAttribute("aria-expanded","false"); $("timDangBo").classList.remove("sai"); }
+function chonDB(id){ dbChon = dsDB.find(d => d.id === id) || null; $("timDangBo").value = dbChon ? dbChon.ten : ""; $("dsDangBo").classList.add("an"); $("timDangBo").setAttribute("aria-expanded","false"); $("timDangBo").classList.remove("sai"); kiemDB(); }
+
+/* ---------- nhắc khi đơn vị ghi một xã/phường nhưng chọn đảng bộ khác ---------- */
+const tachTu = s => boDau(s).replace(/[^a-z0-9]+/g, " ").trim().split(" ").filter(Boolean);
+let khoaXa = null;
+function goiYDB(donVi){
+  if (!khoaXa) khoaXa = dsDB.filter(d => /^(Xã|Phường) /.test(d.ten)).map(d => ({ d, k: tachTu(d.ten.replace(/^(Xã|Phường)\s+/, "")).join(" ") }));
+  const w = tachTu(donVi), thay = [];
+  w.forEach((t, i) => { if (t !== "xa" && t !== "phuong") return;
+    for (let l = 3; l >= 1; l--){ const c = w.slice(i + 1, i + 1 + l).join(" "); if (w.length >= i + 1 + l){ const h = khoaXa.find(x => x.k === c); if (h){ thay.push(h.d); break; } } } });
+  return thay;
+}
+function lechDB(){ if (!dbChon) return null; const g = goiYDB($("donVi").value); if (!g.length || g.some(d => d.id === dbChon.id)) return null; return g[0]; }
+function kiemDB(){
+  const g = lechDB(), box = $("canhDB");
+  if (!g){ box.classList.add("an"); return; }
+  box.innerHTML = `⚠ Đơn vị công tác ghi <b>${esc(g.ten.replace(/^(Xã|Phường)/, m => m.toLowerCase()))}</b> nhưng đồng chí đang chọn <b>${esc(dbChon.ten)}</b>. Cán bộ, đảng viên công tác tại xã, phường (UBND, Mặt trận, trường học, trạm y tế, thôn, tổ…) thuộc đảng bộ xã, phường đó.<br><button type="button" data-g="${g.id}">Chọn ${esc(g.ten)}</button>`;
+  box.classList.remove("an");
+}
+$("canhDB").addEventListener("click", e => { const b = e.target.closest("[data-g]"); if (b) chonDB(+b.dataset.g); });
+$("donVi").addEventListener("input", () => { clearTimeout(window._hkDB); window._hkDB = setTimeout(kiemDB, 300); });
 $("timDangBo").addEventListener("focus", e => { e.target.select(); veDsDB(dbChon && e.target.value === dbChon.ten ? "" : e.target.value); });
 $("timDangBo").addEventListener("input", e => { dbChon = null; veDsDB(e.target.value); });
 $("dsDangBo").addEventListener("mousedown", e => e.preventDefault());
@@ -736,7 +760,9 @@ $("formTT").addEventListener("submit", async e => {
   if (!tt.lanh_dao) loi.push("có hay không giữ chức vụ lãnh đạo, quản lý");
   if (loi.length){ $("loiForm").textContent = "Đồng chí vui lòng nhập/chọn: " + loi.join(", ") + "."; $("loiForm").classList.remove("an"); return; }
   $("loiForm").classList.add("an");
-  const ok = await hoi("Bắt đầu làm bài?", `Bài gồm <b>${dot.so_cau} câu</b>, thời gian <b>${dot.thoi_gian_lam_bai} phút</b> tính từ lúc bấm bắt đầu. Đồng chí kiểm tra lại thông tin:<br><br><b>${esc(tt.ho_ten)}</b><br>${esc(tt.chuc_vu)} — ${esc(tt.don_vi)}<br>${esc(dbChon.ten)}`, "Bắt đầu", "Sửa lại");
+  const lech = lechDB();
+  const ok = await hoi("Bắt đầu làm bài?", `Bài gồm <b>${dot.so_cau} câu</b>, thời gian <b>${dot.thoi_gian_lam_bai} phút</b> tính từ lúc bấm bắt đầu. Đồng chí kiểm tra lại thông tin:<br><br><b>${esc(tt.ho_ten)}</b><br>${esc(tt.chuc_vu)} — ${esc(tt.don_vi)}<br>Thuộc Đảng bộ:<span class="xn-db">${esc(dbChon.ten)}</span>` +
+    (lech ? `<span class="canh-db" style="display:block">⚠ Đơn vị ghi <b>${esc(lech.ten)}</b> nhưng đảng bộ chọn là <b>${esc(dbChon.ten)}</b>. Nếu chọn nhầm, bấm <b>Sửa lại</b>.</span>` : `<small style="color:var(--phu)">Kết quả được tính cho đảng bộ này. Chọn nhầm sẽ phải báo Ban chuyển lại.</small>`), "Bắt đầu", "Sửa lại");
   if (!ok) return;
   const nut = $("nutBatDau"); nut.disabled = true; nut.innerHTML = '<span class="quay"></span> Đang tải đề…';
   try {
