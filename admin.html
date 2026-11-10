@@ -163,8 +163,14 @@ tr.nhom:hover td{background:var(--vang-nhat)} tr.tong:hover td{background:var(--
       <div class="the">
         <div class="hang" style="margin-bottom:10px"><h2 style="margin:0">🏆 Xếp hạng tham gia</h2>
           <span style="color:var(--phu);font-size:13px">Theo số người tham gia, rồi tổng số câu trả lời đúng</span><span class="gian"></span>
-          <a class="nut" href="./#bang-xep-hang" target="_blank" rel="noopener">Mở màn hình trình chiếu ↗</a></div>
+          <a class="nut" href="./#trinh-chieu" target="_blank" rel="noopener">Mở màn hình trình chiếu ↗</a></div>
         <div class="bang-wrap" style="max-height:340px"><table id="bangXH"></table></div>
+      </div>
+      <div class="the" id="theBC">
+        <div class="hang" style="margin-bottom:8px"><h2 style="margin:0">Số liệu đơn vị tự báo cáo</h2>
+          <span style="color:var(--phu);font-size:13px">Công an, Quân sự… tự tổ chức đánh giá, báo cáo số liệu tổng hợp (không có danh sách cá nhân)</span><span class="gian"></span>
+          <button class="nut nut-chinh" id="nutNhapBC">+ Nhập số liệu</button></div>
+        <div id="dsBC"></div>
       </div>
       <div class="the">
         <div class="hang" style="margin-bottom:10px">
@@ -265,7 +271,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const so = n => Number(n || 0).toLocaleString("vi-VN");
 const pt = (a, b) => b ? (a / b * 100).toFixed(1).replace(".", ",") + "%" : "–";
 const boDau = s => (s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase();
-let thuNghiem = false, cauHinh = null, thongKe = [], dsDangBo = [], dsCauHoi = [], tkCau = null, dsTrang = 0;
+let thuNghiem = false, cauHinh = null, thongKe = [], dsDangBo = [], dsCauHoi = [], tkCau = null, dsTrang = 0, soLieuBC = [];
 const MOI_TRANG = 50;
 const TEN_TT = {dang_mo:"Đang mở", thu_nghiem:"Đang chạy thử", chua_mo:"Chưa mở", da_ket_thuc:"Đã kết thúc", tam_dung:"Tạm dừng"};
 
@@ -326,20 +332,88 @@ $("nutLamMoi").onclick = () => taiTatCa();
 async function taiTatCa(){
   $("nutLamMoi").disabled = true;
   try {
-    const [tq, tk, ch, db, cd] = await Promise.all([
+    const [tq, tk, ch, db, cd, bc] = await Promise.all([
       goi("qt_tong_quan", { p_thu_nghiem: thuNghiem }), goi("qt_thong_ke", { p_thu_nghiem: thuNghiem }),
       sb.from("cau_hoi").select("*").order("thu_tu").order("id"), sb.from("dang_bo").select("*").order("thu_tu").order("id"),
-      sb.from("cau_hinh").select("*").eq("id", 1).single()]);
+      sb.from("cau_hinh").select("*").eq("id", 1).single(), sb.from("so_lieu_bao_cao").select("*")]);
     [ch, db, cd].forEach(r => { if (r.error) throw r.error; });
-    thongKe = tk; dsCauHoi = ch.data; dsDangBo = db.data; cauHinh = cd.data; tkCau = null;
+    soLieuBC = bc.error ? [] : bc.data;   // chưa chạy file bổ sung thì bỏ qua, không báo lỗi
+    thongKe = gopBaoCao(tk); dsCauHoi = ch.data; dsDangBo = db.data; cauHinh = cd.data; tkCau = null;
     $("tieuDe").textContent = cauHinh.ten_dot;
     $("nhanTT").textContent = TEN_TT[tq.trang_thai] || tq.trang_thai; $("nhanTT").className = "nhan-tt tt-" + tq.trang_thai;
-    veTongQuan(tq); veBangTQ(); veXepHang(); veCauHoi(); veDangBo(); veCaiDat(tq);
+    veTongQuan(tq); veBaoCao(); veBangTQ(); veXepHang(); veCauHoi(); veDangBo(); veCaiDat(tq);
     $("dsDB").innerHTML = '<option value="">Tất cả đảng bộ</option>' + dsDangBo.map(d => `<option value="${d.id}">${esc(d.ten)}</option>`).join("");
     if (!$("dsTab").classList.contains("an")) taiDanhSach();
   } catch(e){ toast("Lỗi tải dữ liệu: " + loiMsg(e), true); }
   finally { $("nutLamMoi").disabled = false; }
 }
+
+/* ---------- số liệu đơn vị tự báo cáo ---------- */
+// Cộng số liệu tự báo cáo vào bảng tổng hợp (chỉ khi xem dữ liệu chính thức). tham_gia_tt = số thi trực tuyến (dùng cho xếp hạng).
+function gopBaoCao(tk){
+  tk.forEach(r => { r.tham_gia_tt = +r.tham_gia; r._bc = null; });
+  if (thuNghiem) return tk;
+  soLieuBC.forEach(b => { const r = tk.find(x => x.dang_bo_id === b.dang_bo_id); if (!r) return;
+    const tg = b.tg_ld + b.tg_kld, d = b.dat_ld + b.dat_kld;
+    r.tham_gia = +r.tham_gia + tg; r.tham_gia_ld = +r.tham_gia_ld + b.tg_ld; r.dat = +r.dat + d; r.dat_ld = +r.dat_ld + b.dat_ld;
+    r.khong_dat = +r.khong_dat + tg - d; r.khong_dat_ld = +r.khong_dat_ld + b.tg_ld - b.dat_ld; r._bc = b; });
+  return tk;
+}
+const tenDB = id => (dsDangBo.find(d => d.id === id) || {}).ten || ("Đảng bộ #" + id);
+function veBaoCao(){
+  $("dsBC").innerHTML = (thuNghiem ? '<p style="color:var(--phu);margin:0 0 8px;font-size:13px">Đang xem dữ liệu thử nghiệm: số liệu tự báo cáo chỉ được cộng khi xem <b>Chính thức</b>.</p>' : "") +
+    (soLieuBC.length ? `<div class="bang-wrap"><table><thead><tr><th>Đảng bộ</th><th class="so">Tổng số đảng viên</th><th class="so">Tham gia (LĐ / không LĐ)</th><th class="so">Đạt (LĐ / không LĐ)</th><th class="so">Tỷ lệ đạt</th><th>Văn bản báo cáo</th><th>Cập nhật</th><th></th></tr></thead><tbody>` +
+      soLieuBC.map(b => { const tg = b.tg_ld + b.tg_kld, d = b.dat_ld + b.dat_kld;
+        return `<tr><td><b>${esc(tenDB(b.dang_bo_id))}</b></td><td class="so">${b.tong_dang_vien != null ? so(b.tong_dang_vien) : "–"}</td>
+          <td class="so"><b>${so(tg)}</b> (${so(b.tg_ld)} / ${so(b.tg_kld)})</td><td class="so"><b>${so(d)}</b> (${so(b.dat_ld)} / ${so(b.dat_kld)})</td><td class="so">${pt(d, tg)}</td>
+          <td>${esc(b.van_ban || "")}</td><td style="font-size:12px;color:var(--phu)">${ngayGio(b.cap_nhat)}${b.nguoi_nhap ? "<br>" + esc(b.nguoi_nhap) : ""}</td>
+          <td style="white-space:nowrap"><button class="nut nut-nho" data-suabc="${b.dang_bo_id}">Sửa</button> <button class="nut nut-nho nut-nguy" data-xoabc="${b.dang_bo_id}">Xóa</button></td></tr>`; }).join("") + "</tbody></table></div>"
+    : '<p style="color:var(--phu);margin:0">Chưa có số liệu. Khi Đảng ủy Công an tỉnh, Đảng ủy Quân sự tỉnh gửi báo cáo, bấm <b>+ Nhập số liệu</b>.</p>');
+}
+function moNhapBC(b){
+  const moi = !b; b = b || { dang_bo_id: "", tong_dang_vien: "", tg_ld: 0, tg_kld: 0, dat_ld: 0, dat_kld: 0, van_ban: "" };
+  const daCo = new Set(soLieuBC.map(x => x.dang_bo_id)), uuTien = d => /công an|quân sự/i.test(d.ten) ? 0 : 1;
+  const chon = [...dsDangBo].sort((a, c) => uuTien(a) - uuTien(c) || a.thu_tu - c.thu_tu)
+    .filter(d => !moi || !daCo.has(d.id)).map(d => `<option value="${d.id}" ${d.id === b.dang_bo_id ? "selected" : ""}>${esc(d.ten)}</option>`).join("");
+  const o = (ten, nhan, gt) => `<label style="display:block"><small style="color:var(--phu)">${nhan}</small><input class="o" type="number" min="0" step="1" name="${ten}" value="${gt ?? ""}" style="width:100%"></label>`;
+  const m = hop(`<h3>${moi ? "Nhập" : "Sửa"} số liệu đơn vị tự báo cáo</h3>
+    <form id="fBC">
+      <label style="display:block;margin-bottom:10px"><small style="color:var(--phu)">Đảng bộ</small>
+        <select class="o" name="dang_bo_id" style="width:100%" ${moi ? "" : "disabled"}>${chon}</select></label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${o("tong_dang_vien", "Tổng số đảng viên của đảng bộ (không bắt buộc)", b.tong_dang_vien)}<span></span>
+        ${o("tg_ld", "Số tham gia: giữ chức vụ lãnh đạo, quản lý", b.tg_ld)}${o("tg_kld", "Số tham gia: không giữ chức vụ lãnh đạo", b.tg_kld)}
+        ${o("dat_ld", "Số đạt yêu cầu: lãnh đạo, quản lý", b.dat_ld)}${o("dat_kld", "Số đạt yêu cầu: không giữ chức vụ", b.dat_kld)}
+      </div>
+      <label style="display:block;margin-top:10px"><small style="color:var(--phu)">Văn bản báo cáo (số, ngày)</small><input class="o" name="van_ban" value="${esc(b.van_ban || "")}" placeholder="VD: Báo cáo số 123-BC/ĐU ngày 16/11/2026" style="width:100%"></label>
+      <div id="bcTong" style="margin-top:10px;font-size:14px"></div>
+      <div class="hang" style="justify-content:flex-end;margin-top:12px"><button type="button" class="nut" data-huy>Hủy</button><button class="nut nut-chinh">Lưu</button></div>
+    </form>`);
+  const f = m.querySelector("#fBC"), n = k => Math.max(0, Math.floor(+f.elements[k].value || 0));
+  const kiem = () => { const tg = n("tg_ld") + n("tg_kld"), d = n("dat_ld") + n("dat_kld"), tdv = f.elements.tong_dang_vien.value === "" ? null : n("tong_dang_vien");
+    const loi = n("dat_ld") > n("tg_ld") ? "Số đạt (lãnh đạo) lớn hơn số tham gia (lãnh đạo)." : n("dat_kld") > n("tg_kld") ? "Số đạt (không giữ chức vụ) lớn hơn số tham gia (không giữ chức vụ)."
+      : tdv != null && tg > tdv ? "Số tham gia lớn hơn tổng số đảng viên." : "";
+    m.querySelector("#bcTong").innerHTML = loi ? `<span style="color:var(--do)">${loi}</span>` :
+      `Tổng tham gia <b>${so(tg)}</b>${tdv ? ` (${pt(tg, tdv)} số đảng viên)` : ""} · Đạt <b>${so(d)}</b> · Không đạt <b>${so(tg - d)}</b> · Tỷ lệ đạt <b>${pt(d, tg)}</b>`;
+    return !loi; };
+  f.addEventListener("input", kiem); kiem();
+  m.querySelector("[data-huy]").onclick = () => m.remove();
+  f.addEventListener("submit", async e => { e.preventDefault(); if (!kiem()) return;
+    const ban = { dang_bo_id: moi ? +f.elements.dang_bo_id.value : b.dang_bo_id, tong_dang_vien: f.elements.tong_dang_vien.value === "" ? null : n("tong_dang_vien"),
+      tg_ld: n("tg_ld"), tg_kld: n("tg_kld"), dat_ld: n("dat_ld"), dat_kld: n("dat_kld"), van_ban: f.elements.van_ban.value.trim() || null,
+      nguoi_nhap: $("emailND").textContent || null, cap_nhat: new Date().toISOString() };
+    const { error } = moi ? await sb.from("so_lieu_bao_cao").insert(ban) : await sb.from("so_lieu_bao_cao").update(ban).eq("dang_bo_id", b.dang_bo_id);
+    if (error){ toast(/so_lieu_bao_cao/.test(error.message) && /exist|schema cache/i.test(error.message) ? "Chưa chạy file bo_sung_so_lieu_bao_cao.sql trên Supabase." : loiMsg(error), true); return; }
+    m.remove(); toast("Đã lưu số liệu của " + tenDB(ban.dang_bo_id) + "."); taiTatCa(); });
+}
+$("nutNhapBC").onclick = () => moNhapBC();
+$("dsBC").addEventListener("click", async e => {
+  const s = e.target.closest("[data-suabc]"); if (s){ moNhapBC(soLieuBC.find(b => b.dang_bo_id === +s.dataset.suabc)); return; }
+  const x = e.target.closest("[data-xoabc]"); if (!x) return;
+  if (!await xacNhan("Xóa số liệu tự báo cáo?", `Xóa số liệu của <b>${esc(tenDB(+x.dataset.xoabc))}</b>. Số liệu thi trực tuyến không bị ảnh hưởng.`, "Xóa")) return;
+  const { error } = await sb.from("so_lieu_bao_cao").delete().eq("dang_bo_id", +x.dataset.xoabc);
+  if (error) toast(loiMsg(error), true); else { toast("Đã xóa."); taiTatCa(); }
+});
 
 /* ---------- tổng hợp ---------- */
 function tongCong(ds){ const t = {tham_gia:0,tham_gia_ld:0,dat:0,dat_ld:0,khong_dat:0,khong_dat_ld:0,so_luot:0};
@@ -348,7 +422,7 @@ function veTongQuan(tq){
   const t = tongCong(thongKe), soDBCo = thongKe.filter(r => +r.tham_gia > 0).length;
   const o = (lop, nhan, gt, phu) => `<div class="o-so ${lop}"><small>${nhan}</small><b>${gt}</b><span>${phu}</span></div>`;
   $("oSo").innerHTML =
-    o("do", "Người tham gia", so(t.tham_gia), `${so(t.so_luot)} lượt nộp · ${soDBCo}/${thongKe.length} đảng bộ`) +
+    o("do", "Người tham gia", so(t.tham_gia), `${so(t.so_luot)} lượt nộp · ${soDBCo}/${thongKe.length} đảng bộ${thongKe.some(r => r._bc) ? " · gồm số liệu tự báo cáo" : ""}`) +
     o("", "Đạt yêu cầu", so(t.dat), `Tỷ lệ ${pt(t.dat, t.tham_gia)}`) +
     o("", "Không đạt", so(t.khong_dat), `Tỷ lệ ${pt(t.khong_dat, t.tham_gia)}`) +
     o("", "Giữ chức vụ lãnh đạo", so(t.tham_gia_ld), `Đạt ${so(t.dat_ld)} · Không đạt ${so(t.khong_dat_ld)}`) +
@@ -369,14 +443,17 @@ function veBangTQ(){
   nhom.forEach((n, i) => {
     const ds = thongKe.filter(r => r.nhom === n);
     html += dongTK(LA[i] || i+1, n, tongCong(ds), "nhom");
-    ds.forEach((r, j) => { if ((tim && !boDau(r.ten).includes(tim)) || (chiCo && !+r.tham_gia)) return; html += dongTK(j+1, r.ten, r); });
+    ds.forEach((r, j) => { if ((tim && !boDau(r.ten).includes(tim)) || (chiCo && !+r.tham_gia)) return; html += dongTK(j+1, r.ten + (r._bc ? " (*)" : ""), r); });
   });
   html += dongTK("", "TỔNG CỘNG", tongCong(thongKe), "tong") + "</tbody>";
+  if (thongKe.some(r => r._bc)) html += `<tfoot><tr><td colspan="12" style="font-size:13px;color:var(--phu);font-style:italic">(*) Có cộng số liệu do đơn vị tự tổ chức đánh giá và báo cáo.</td></tr></tfoot>`;
   $("bangTQ").innerHTML = html;
 }
 $("tqTim").oninput = veBangTQ; $("tqChiCo").onchange = veBangTQ;
 function xepHang(){
-  const ds = thongKe.filter(r => +r.tham_gia > 0).sort((a, b) => b.tham_gia - a.tham_gia || b.tong_dung - a.tong_dung);
+  // chỉ xếp theo số thi trực tuyến; số liệu tự báo cáo không đưa vào xếp hạng
+  const ds = thongKe.filter(r => r.tham_gia_tt > 0).map(r => r._bc ? { ...r, tham_gia: r.tham_gia_tt, dat: +r.dat - r._bc.dat_ld - r._bc.dat_kld } : r)
+    .sort((a, b) => b.tham_gia - a.tham_gia || b.tong_dung - a.tong_dung);
   let h = 0; ds.forEach((r, i) => { if (i === 0 || +r.tham_gia !== +ds[i-1].tham_gia || +r.tong_dung !== +ds[i-1].tong_dung) h = i + 1; r._hang = h; });
   return ds;
 }
@@ -413,11 +490,13 @@ async function taiDanhSach(){
         <td>${r.nop_luc ? (r.dat ? '<span class="dat">Đạt</span>' : '<span class="khong">Không đạt</span>') : '<span class="mo">Chưa nộp</span>'}${r.qua_gio ? ' <span class="the-nho" title="Nộp trễ quá 5 phút so với thời gian làm bài">trễ</span>' : ""}</td>
         <td class="so">${tg(r.thoi_gian_giay)}</td><td>${ngayGio(r.nop_luc || r.bat_dau)}</td><td class="so">${r.so_lan}</td>
         <td>${$("dsTatCa").checked ? `<button class="nut nut-nho nut-nguy" data-xoa="${r.id}" title="Xóa lượt thi này">Xóa lượt</button>`
-              : `<button class="nut nut-nho nut-nguy" data-xoanguoi="${r.khoa}" data-ten="${esc(r.ho_ten)}" title="Xóa người này và mọi lượt thi">Xóa</button>`}</td></tr>`).join("")
+              : `<span style="white-space:nowrap"><button class="nut nut-nho" data-chuyen="${r.khoa}" data-ten="${esc(r.ho_ten)}" data-db="${esc(r.dang_bo)}" title="Chuyển sang đảng bộ khác (khi chọn nhầm)">Chuyển ĐB</button> <button class="nut nut-nho nut-nguy" data-xoanguoi="${r.khoa}" data-ten="${esc(r.ho_ten)}" title="Xóa người này và mọi lượt thi">Xóa</button></span>`}</td></tr>`).join("")
       : '<tr><td colspan="12" style="color:var(--phu);padding:16px">Không có dữ liệu.</td></tr>') + "</tbody>";
   } catch(e){ $("bangDS").innerHTML = ""; toast(loiMsg(e), true); }
 }
 $("bangDS").addEventListener("click", async e => {
+  const c = e.target.closest("[data-chuyen]");
+  if (c){ moChuyenDB(c.dataset.chuyen, c.dataset.ten, c.dataset.db); return; }
   const n = e.target.closest("[data-xoanguoi]");
   if (n){
     if (!await xacNhan("Xóa người tham gia?", `Xóa <b>${n.dataset.ten}</b> cùng mọi lượt thi của người này (dùng để loại bản ghi nhập sai, trùng…).`, "Xóa")) return;
@@ -428,6 +507,27 @@ $("bangDS").addEventListener("click", async e => {
   if (!await xacNhan("Xóa lượt thi?", "Lượt thi này sẽ bị xóa vĩnh viễn; kết quả cao nhất và số lần của người đó được tính lại.", "Xóa")) return;
   try { await goi("qt_xoa_bai", { p_id: b.dataset.xoa }); toast("Đã xóa."); taiDanhSach(); } catch(err){ toast(loiMsg(err), true); }
 });
+
+// Chuyển đảng bộ cho người chọn nhầm
+function moChuyenDB(khoa, ten, dbCu){
+  const m = hop(`<h3>Chuyển đảng bộ</h3>
+    <p style="color:var(--phu);margin-top:0"><b style="color:var(--chu)">${ten}</b> đang ở <b style="color:var(--chu)">${dbCu}</b>. Chọn đảng bộ đúng; mọi lượt thi và kết quả cao nhất được chuyển theo.</p>
+    <input class="o" id="cdbTim" placeholder="Gõ tên đảng bộ để lọc…" autocomplete="off" style="width:100%;margin-bottom:8px">
+    <select class="o" id="cdbChon" size="8" style="width:100%"></select>
+    <div class="hang" style="justify-content:flex-end;margin-top:12px"><button class="nut" data-huy>Hủy</button><button class="nut nut-chinh" data-ok>Chuyển</button></div>`);
+  const ve = () => { const k = boDau(m.querySelector("#cdbTim").value.trim());
+    m.querySelector("#cdbChon").innerHTML = dsDangBo.filter(d => d.ten !== dbCu && (!k || boDau(d.ten).includes(k))).map(d => `<option value="${d.id}">${esc(d.ten)}</option>`).join(""); };
+  ve(); m.querySelector("#cdbTim").oninput = ve; m.querySelector("#cdbTim").focus();
+  m.querySelector("[data-huy]").onclick = () => m.remove();
+  m.querySelector("[data-ok]").onclick = async () => {
+    const sel = m.querySelector("#cdbChon"), id = +sel.value; if (!id){ toast("Chưa chọn đảng bộ.", true); return; }
+    const tenMoi = sel.options[sel.selectedIndex].text, nut = m.querySelector("[data-ok]"); nut.disabled = true;
+    try { const r = await goi("qt_chuyen_dang_bo", { p_thu_nghiem: thuNghiem, p_khoa: khoa, p_dang_bo: id });
+      m.remove(); toast(r.gop ? `Đã chuyển sang ${tenMoi} và gộp với bản ghi có sẵn ở đó (tổng ${r.so_lan} lượt, lấy kết quả cao nhất).` : `Đã chuyển sang ${tenMoi}.`);
+      taiDanhSach(); }
+    catch(err){ nut.disabled = false; toast(loiMsg(err), true); }
+  };
+}
 
 /* ---------- câu hỏi ---------- */
 function veCauHoi(){
@@ -446,7 +546,7 @@ function veCauHoi(){
       ${q.ghi_chu ? `<div class="canh">⚠ ${esc(q.ghi_chu)}</div>` : ""}</div>`; }).join("");
 }
 async function tinhThongKeCau(){
-  const dsDB = thongKe.filter(r => +r.tham_gia > 0), tt = tienTrinh("Đang tính tỷ lệ trả lời đúng từng câu");
+  const dsDB = thongKe.filter(r => r.tham_gia_tt > 0), tt = tienTrinh("Đang tính tỷ lệ trả lời đúng từng câu");
   try {
     const tong = {};
     await chayLanLuot(dsDB, async r => {
@@ -604,12 +704,12 @@ $("nutXoaThu").onclick = async () => {
 
 /* ---------- xuất Excel ---------- */
 $("nutXuat").onclick = () => {
-  const t = tongCong(thongKe), coNguoi = thongKe.filter(r => +r.tham_gia > 0);
+  const t = tongCong(thongKe.map(r => ({ ...r, tham_gia: r.tham_gia_tt }))), coNguoi = thongKe.filter(r => r.tham_gia_tt > 0);
   const m = hop(`<h3>Xuất Excel</h3><form id="fXuat" class="lua-xuat">
     <p style="color:var(--phu);margin-top:0">File luôn gồm sheet <b>Tổng hợp</b> theo đảng bộ và sheet <b>Theo câu hỏi</b>. Chọn có kèm danh sách từng người không:</p>
     <label><input type="radio" name="kieu" value="khong" checked><span><b>Không kèm danh sách</b><br><small>Nhanh, dùng cho báo cáo số liệu.</small></span></label>
     <label><input type="radio" name="kieu" value="db"><span><b>Kèm danh sách một đảng bộ</b><br>
-      <select class="o" name="db" style="margin-top:6px;max-width:100%">${coNguoi.map(r => `<option value="${r.dang_bo_id}">${esc(r.ten)} (${so(r.tham_gia)} người)</option>`).join("")}</select></span></label>
+      <select class="o" name="db" style="margin-top:6px;max-width:100%">${coNguoi.map(r => `<option value="${r.dang_bo_id}">${esc(r.ten)} (${so(r.tham_gia_tt)} người)</option>`).join("")}</select></span></label>
     <label><input type="radio" name="kieu" value="all"><span><b>Kèm danh sách toàn tỉnh</b> (${so(t.tham_gia)} người)<br><small>${t.tham_gia > 30000 ? "Số lượng lớn: có thể mất 1–3 phút, nên dùng máy tính, không dùng điện thoại." : "Mất vài chục giây."}</small></span></label>
     <div class="hang" style="justify-content:flex-end;margin-top:12px"><button type="button" class="nut" id="fHuy">Hủy</button><button class="nut nut-vang">⬇ Xuất</button></div></form>`);
   m.querySelector("#fHuy").onclick = () => m.remove();
@@ -662,9 +762,13 @@ async function xuatExcel(ds, kieu){
   nhom.forEach((n, i) => { const dsn = thongKe.filter(x => x.nhom === n);
     ws.getRow(r).values = [LA[i] || i+1, n.toUpperCase(), ...giaTri(tongCong(dsn))]; ws.getRow(r).eachCell(o => o.font = { ...F, bold: true });
     ws.getRow(r).eachCell(o => o.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFFFF6E0" } }); r++;
-    dsn.forEach((x, j) => { ws.getRow(r).values = [j+1, x.ten, ...giaTri(x)]; r++; }); });
+    dsn.forEach((x, j) => { ws.getRow(r).values = [j+1, x.ten + (x._bc ? " (*)" : ""), ...giaTri(x)]; r++; }); });
   ws.getRow(r).values = ["", "TỔNG CỘNG", ...giaTri(tongCong(thongKe))]; ws.getRow(r).eachCell(o => o.font = { ...F, bold: true });
   kieuBang(ws, 6, r, 12);
+  const coBC = thongKe.filter(x => x._bc);
+  if (coBC.length){ ws.mergeCells(r + 2, 1, r + 2, 12); const g = ws.getCell(r + 2, 1);
+    g.value = "(*) Có cộng số liệu do đơn vị tự tổ chức đánh giá và báo cáo: " + coBC.map(x => x.ten + (x._bc.van_ban ? " (" + x._bc.van_ban + ")" : "")).join("; ") + ".";
+    g.font = { ...F, italic: true }; g.alignment = { wrapText: true, vertical: "top" }; ws.getRow(r + 2).height = 32; }
   for (let i = 8; i <= r; i++){ ws.getCell(i, 1).alignment = { horizontal: "center" }; ws.getCell(i, 12).numFmt = "0.0"; for (let c = 3; c <= 11; c++) ws.getCell(i, c).numFmt = "#,##0"; }
   ws.columns.forEach((c, i) => c.width = [6, 36, 10, 12, 12, 10, 12, 12, 10, 12, 12, 10][i]);
 
